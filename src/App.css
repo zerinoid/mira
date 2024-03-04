@@ -1,5 +1,27 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  text-align: center;
+}
+
+.header {
+  display: grid;
+  grid-template-columns: 5fr 40fr 8fr;
+  grid-template-areas:
+    "logo title ."
+    "header-number header-project header-date";
+  justify-items: start;
+  row-gap: 1.6rem;
+}
+
+.head-number {
+  grid-area: header-number;
+}
+
+.head-project {
+  grid-area: header-project;
+}
+
+.head-date {
+  grid-area: header-date;
+  justify-self: end;
 }
