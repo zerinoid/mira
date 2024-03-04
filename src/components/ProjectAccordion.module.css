@@ -1,0 +1,35 @@
+.projectContainer {
+  display: grid;
+  grid-template-columns: 5fr 40fr 8fr;
+  grid-template-areas:
+    "number title date"
+    "number text date"
+    "number image date";
+  justify-items: start;
+  text-align: start;
+}
+
+.number {
+  grid-area: number
+}
+
+.title {
+  grid-area: title;
+  padding-bottom: 1rem;
+}
+
+.text {
+  grid-area: text;
+  @apply border-t border-red-500;
+  padding-bottom: 1rem;
+}
+
+.image {
+  grid-area: image
+}
+
+.date {
+  grid-area: date;
+  justify-self: end;
+  text-align: end;
+}

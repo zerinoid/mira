@@ -1,4 +1,5 @@
 import { FC } from "react";
+import styles from "./ProjectAccordion.module.css";
 
 type Props = {
   project: Project;
@@ -13,17 +14,19 @@ export type Project = {
 };
 
 const ProjectAccordion: FC<Props> = ({ project }) => {
-  return (
-    <div>
-      <div>{project.number}</div>
-      <div>{project.title}</div>
-      <div>{project.text}</div>
-      <div>
-        <img alt={project.title} src={project.imagePath} />
+  {
+    return (
+      <div className={`${styles.projectContainer} border-t border-red-500`}>
+        <div className={styles.number}>{project.number}</div>
+        <div className={styles.title}>{project.title}</div>
+        <div className={styles.text}>{project.text}</div>
+        <div className={styles.image}>
+          <img alt={project.title} src={project.imagePath} />
+        </div>
+        <div className={styles.date}>{project.date}</div>
       </div>
-      <div>{project.date}</div>
-    </div>
-  );
+    );
+  }
 };
 
 export default ProjectAccordion;
