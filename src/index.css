@@ -8,8 +8,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #ba141a;
-  background-color: #ffffe6;
+  @apply text-red-500;
+  @apply bg-yellow-100;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
