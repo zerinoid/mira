@@ -17,7 +17,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
   {
     return (
       <div
-        className={`${styles.projectContainer} border-t border-red-500 px-[2px]`}
+        className={`${styles.projectContainer} border-t border-red-500 px-[5px]`}
       >
         <div className={styles.number}>{project.number}</div>
         <div className={styles.title}>{project.title}</div>

@@ -15,7 +15,7 @@ const projects: Project[] = [
 function App() {
   return (
     <>
-      <header className="header px-[2px]">
+      <header className="header px-[5px]">
         <div className="logo"></div>
         <div className="title">Mira</div>
         <div className="head-number">#</div>
