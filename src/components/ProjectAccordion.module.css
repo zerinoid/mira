@@ -3,8 +3,13 @@
   grid-template-columns: 5fr 40fr 8fr;
   grid-template-areas:
     "number title date"
-    "number text date"
-    "number image date";
+    "number client date"
+    "number category date"
+    "number divider date"
+    ". details ."
+    ". additional ."
+    ". text ."
+    ". image .";
   justify-items: start;
   text-align: start;
 
@@ -12,9 +17,9 @@
     grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
     grid-template-areas:
       "number category title client date"
-      "number . text image ."
-      "number . text image .";
-    column-gap: 1vw;
+      "number details text image date"
+      "number additional text image date";
+    column-gap: 0.8vw;
   }
 }
 
@@ -23,23 +28,45 @@
 }
 
 .category {
-  display: none;
   grid-area: category;
+}
+
+.divider {
+  grid-area: divider;
+  width: 100%;
+  margin-top: 1rem;
+  @apply border-b border-red-500;
 
   @media screen(lg) {
-    display: block;
+    display: none;
   }
+}
+
+.details {
+  grid-area: details;
+  margin-bottom: 1.5rem;
+
+  @media screen(lg) {
+    margin-bottom: 0;
+  }
+}
+
+.additional {
+  grid-area: additional;
+  margin-bottom: 1.5rem;
 }
 
 .title {
   grid-area: title;
-  padding-bottom: 1rem;
+
+  @media screen(lg) {
+    margin-bottom: 1rem;
+  }
 }
 
 .text {
   grid-area: text;
-  @apply border-t border-red-500;
-  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 .image {
@@ -47,12 +74,7 @@
 }
 
 .client {
-  display: none;
   grid-area: client;
-
-  @media screen(lg) {
-    display: block;
-  }
 }
 
 .date {

@@ -5,6 +5,9 @@ const projects: Project[] = [
   {
     number: 1,
     category: "Editorial",
+    details:
+      "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.",
+    additional: "Observações",
     title: "Orgulho e resistências: LGBT na ditadura",
     text: "Produção editorial de catálogo da exposição no Memorial da Resistência de São Paulo. ",
     date: "2020-2021",

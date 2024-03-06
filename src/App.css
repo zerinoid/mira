@@ -17,7 +17,7 @@
     grid-template-areas:
       "logo title . . ."
     "header-number header-category header-project header-client header-date";
-    column-gap: 1vw;
+    column-gap: 0.8vw;
   }
 }
 

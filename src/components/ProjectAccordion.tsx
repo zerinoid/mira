@@ -8,6 +8,8 @@ type Props = {
 export type Project = {
   number: number;
   category: string;
+  details?: string;
+  additional?: string;
   title: string;
   text: string;
   date: string;
@@ -23,6 +25,9 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
       >
         <div className={styles.number}>{project.number}</div>
         <div className={styles.category}>{project.category}</div>
+        <div className={styles.divider} />
+        <div className={styles.details}>{project.details}</div>
+        <div className={styles.additional}>{project.additional}</div>
         <div className={styles.title}>{project.title}</div>
         <div className={styles.text}>{project.text}</div>
         <div className={styles.image}>
