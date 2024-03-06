@@ -4,10 +4,11 @@ import ProjectAccordion, { Project } from "./components/ProjectAccordion";
 const projects: Project[] = [
   {
     number: 1,
-    title:
-      "Associação Pinacoteca Arte e Cultura _ Orgulho e resistências: LGBT na ditadura",
+    category: "Editorial",
+    title: "Orgulho e resistências: LGBT na ditadura",
     text: "Produção editorial de catálogo da exposição no Memorial da Resistência de São Paulo. ",
     date: "2020-2021",
+    client: "Associação Pinacoteca Arte e Cultura",
     imagePath: "013_memorial.webp",
   },
 ];
@@ -19,7 +20,10 @@ function App() {
         <div className="logo"></div>
         <div className="title">Mira</div>
         <div className="head-number">#</div>
+        <div className="head-category">Tipo</div>
         <div className="head-project">Projeto</div>
+        <div className="head-project">Projeto</div>
+        <div className="head-client">Cliente</div>
         <div className="head-date">Ano</div>
       </header>
       <section className="projects">

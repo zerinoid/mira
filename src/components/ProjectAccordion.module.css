@@ -7,10 +7,28 @@
     "number image date";
   justify-items: start;
   text-align: start;
+
+  @media screen(lg) {
+    grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
+    grid-template-areas:
+      "number category title client date"
+      "number . text image ."
+      "number . text image .";
+    column-gap: 1vw;
+  }
 }
 
 .number {
   grid-area: number
+}
+
+.category {
+  display: none;
+  grid-area: category;
+
+  @media screen(lg) {
+    display: block;
+  }
 }
 
 .title {
@@ -26,6 +44,15 @@
 
 .image {
   grid-area: image
+}
+
+.client {
+  display: none;
+  grid-area: client;
+
+  @media screen(lg) {
+    display: block;
+  }
 }
 
 .date {

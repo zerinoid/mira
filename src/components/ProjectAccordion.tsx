@@ -7,9 +7,11 @@ type Props = {
 
 export type Project = {
   number: number;
+  category: string;
   title: string;
   text: string;
   date: string;
+  client: string;
   imagePath: string;
 };
 
@@ -20,11 +22,13 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
         className={`${styles.projectContainer} border-t border-red-500 px-[5px]`}
       >
         <div className={styles.number}>{project.number}</div>
+        <div className={styles.category}>{project.category}</div>
         <div className={styles.title}>{project.title}</div>
         <div className={styles.text}>{project.text}</div>
         <div className={styles.image}>
           <img alt={project.title} src={project.imagePath} />
         </div>
+        <div className={styles.client}>{project.client}</div>
         <div className={styles.date}>{project.date}</div>
       </div>
     );

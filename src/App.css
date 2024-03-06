@@ -11,14 +11,40 @@
     "header-number header-project header-date";
   justify-items: start;
   row-gap: 1.6rem;
+
+  @media screen(lg) {
+    grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
+    grid-template-areas:
+      "logo title . . ."
+    "header-number header-category header-project header-client header-date";
+    column-gap: 1vw;
+  }
 }
 
 .head-number {
   grid-area: header-number;
 }
 
+.head-category {
+  display: none;
+  grid-area: header-category;
+
+  @media screen(lg) {
+    display: block;
+  }
+}
+
 .head-project {
   grid-area: header-project;
+}
+
+.head-client {
+  display: none;
+  grid-area: header-client;
+
+  @media screen(lg) {
+    display: block;
+  }
 }
 
 .head-date {
