@@ -3,7 +3,7 @@ import ProjectAccordion, { Project } from "./components/ProjectAccordion";
 
 const projects: Project[] = [
   {
-    number: 1,
+    number: 2,
     category: "Editorial",
     details:
       "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.",
@@ -13,6 +13,17 @@ const projects: Project[] = [
     date: "2020-2021",
     client: "Associação Pinacoteca Arte e Cultura",
     imagePath: "013_memorial.webp",
+  },
+  {
+    number: 1,
+    category: "Migração",
+    title: "Migração de website",
+    details: "Nullam libero mauris, consequat quis, varius et",
+    additional: "Obs obs obs",
+    text: "Alimentação com imagens e conteúdo bilíngue.",
+    date: "2020",
+    client: "Zipper Galeria",
+    imagePath: "012_zipper.webp",
   },
 ];
 
