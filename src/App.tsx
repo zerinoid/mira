@@ -36,13 +36,12 @@ function App() {
         <div className="head-number">#</div>
         <div className="head-category">Tipo</div>
         <div className="head-project">Projeto</div>
-        <div className="head-project">Projeto</div>
         <div className="head-client">Cliente</div>
         <div className="head-date">Ano</div>
       </header>
       <section className="projects">
         {projects.map((project) => (
-          <ProjectAccordion project={project} />
+          <ProjectAccordion key={project.number} project={project} />
         ))}
       </section>
     </>
