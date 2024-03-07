@@ -1,5 +1,7 @@
+import { useState } from "react";
 import "./App.css";
 import ProjectAccordion, { Project } from "./components/ProjectAccordion";
+import SliderBio from "./components/SliderBio";
 
 const projects: Project[] = [
   {
@@ -28,11 +30,18 @@ const projects: Project[] = [
 ];
 
 function App() {
+  const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
+
+  const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
+
   return (
     <>
+      <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
       <header className="header px-[5px]">
         <div className="logo"></div>
-        <div className="title">Mira</div>
+        <div className="title cursor-pointer" onClick={handleSliderBio}>
+          Mira
+        </div>
         <div className="head-number">#</div>
         <div className="head-category">Tipo</div>
         <div className="head-project">Projeto</div>
