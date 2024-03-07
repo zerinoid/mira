@@ -27,34 +27,58 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
       <div
         className={`${styles.projectContainer} border-t border-red-500 px-[5px]`}
       >
-        <div className={styles.number} onClick={opener}>
+        <div
+          className="[grid-area:number] cursor-pointer w-full"
+          onClick={opener}
+        >
           {project.number}
         </div>
-        <div className={styles.category} onClick={opener}>
+        <div
+          className="[grid-area:category] cursor-pointer w-full"
+          onClick={opener}
+        >
           {project.category}
         </div>
-        {isProjectOpen && <div className={styles.divider} onClick={opener} />}
+        {isProjectOpen && (
+          <div
+            className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-red-500 lg:hidden"
+            onClick={opener}
+          />
+        )}
         {isProjectOpen && (
           <>
-            <div className={styles.details}>{project.details}</div>
-            <div className={styles.additional}>{project.additional}</div>
+            <div className="[grid-area:details] mb-6 lg:mb-0">
+              {project.details}
+            </div>
+            <div className="[grid-area:additional] mb-6">
+              {project.additional}
+            </div>
           </>
         )}
-        <div className={styles.title} onClick={opener}>
+        <div
+          className="[grid-area:title] cursor-pointer w-full md:mb-4"
+          onClick={opener}
+        >
           {project.title}
         </div>
         {isProjectOpen && (
           <>
-            <div className={styles.text}>{project.text}</div>
-            <div className={styles.image}>
+            <div className="[grid-area:text] mb-6">{project.text}</div>
+            <div className="[grid-area:image]">
               <img alt={project.title} src={project.imagePath} />
             </div>
           </>
         )}
-        <div className={styles.client} onClick={opener}>
+        <div
+          className="[grid-area:client] cursor-pointer w-full"
+          onClick={opener}
+        >
           {project.client}
         </div>
-        <div className={styles.date} onClick={opener}>
+        <div
+          className="[grid-area:date] cursor-pointer w-full justify-self-end text-end"
+          onClick={opener}
+        >
           {project.date}
         </div>
       </div>
