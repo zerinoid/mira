@@ -22,7 +22,7 @@ const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed top-0 left-0 bg-yellow-100 pl-12 pr-3 border-r border-red-500 w-[85vw] lg:w-1/5 h-screen`}
+      } fixed top-0 left-0 bg-yellow-100 pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r border-red-500 w-[85vw] md:w-1/2 lg:w-1/3 h-screen cursor-pointer`}
     >
       <header
         className="flex justify-between items-center mb-12"

@@ -37,7 +37,7 @@ function App() {
   return (
     <>
       <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
-      <header className="header px-[5px]">
+      <header className="header px-[5px] md:pt-4">
         <div className="logo"></div>
         <div className="title cursor-pointer" onClick={handleSliderBio}>
           Mira
