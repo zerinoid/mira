@@ -11,7 +11,7 @@ export type Project = {
   details?: string;
   additional?: string;
   title: string;
-  text: string;
+  body: string;
   date: string;
   client: string;
   imagePath: string;
@@ -63,7 +63,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
         </div>
         {isProjectOpen && (
           <>
-            <div className="[grid-area:text] mb-6">{project.text}</div>
+            <div className="[grid-area:body] mb-6">{project.body}</div>
             <div className="[grid-area:image]">
               <img alt={project.title} src={project.imagePath} />
             </div>

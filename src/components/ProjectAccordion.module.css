@@ -8,7 +8,7 @@
     "number divider date"
     ". details ."
     ". additional ."
-    ". text ."
+    ". body ."
     ". image .";
   justify-items: start;
   text-align: start;
@@ -18,8 +18,8 @@
     grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
     grid-template-areas:
       "number category title client date"
-      ". details text image ."
-      ". additional text image .";
+      ". details body image ."
+      ". additional body image .";
     column-gap: 0.8vw;
   }
 }
