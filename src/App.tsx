@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import ProjectAccordion, { Project } from "./components/ProjectAccordion";
 import SliderBio from "./components/SliderBio";
+import { databases } from "./lib/appwrite_client";
 
 const projects: Project[] = [
   {
@@ -31,6 +32,18 @@ const projects: Project[] = [
 
 function App() {
   const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
+
+  useEffect(() => {
+    getProjects();
+  }, []);
+
+  const getProjects = async () => {
+    const response = await databases.listDocuments(
+      import.meta.env.VITE_DATABASE_ID,
+      import.meta.env.VITE_COLLECTION_ID_PROJECTS
+    );
+    console.log(response, "### response  ###");
+  };
 
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
