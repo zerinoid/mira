@@ -1,36 +1,38 @@
 import { useEffect, useState } from "react";
 import "./App.css";
-import ProjectAccordion, { Project } from "./components/ProjectAccordion";
+import ProjectAccordion from "./components/ProjectAccordion";
 import SliderBio from "./components/SliderBio";
 import { databases } from "./lib/appwrite_client";
+import IProject from "./models/Project";
 
-const projects: Project[] = [
-  {
-    number: 2,
-    category: "Editorial",
-    details:
-      "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.",
-    additional: "Observações",
-    title: "Orgulho e resistências: LGBT na ditadura",
-    body: "Produção editorial de catálogo da exposição no Memorial da Resistência de São Paulo. ",
-    date: "2020-2021",
-    client: "Associação Pinacoteca Arte e Cultura",
-    imagePath: "013_memorial.webp",
-  },
-  {
-    number: 1,
-    category: "Migração",
-    title: "Migração de website",
-    details: "Nullam libero mauris, consequat quis, varius et",
-    additional: "Obs obs obs",
-    body: "Alimentação com imagens e conteúdo bilíngue.",
-    date: "2020",
-    client: "Zipper Galeria",
-    imagePath: "012_zipper.webp",
-  },
-];
+/* const projects: Project[] = [
+ *   {
+ *     number: 2,
+ *     category: "Editorial",
+ *     details:
+ *       "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.",
+ *     additional: "Observações",
+ *     title: "Orgulho e resistências: LGBT na ditadura",
+ *     body: "Produção editorial de catálogo da exposição no Memorial da Resistência de São Paulo. ",
+ *     date: "2020-2021",
+ *     client: "Associação Pinacoteca Arte e Cultura",
+ *     imagePath: "013_memorial.webp",
+ *   },
+ *   {
+ *     number: 1,
+ *     category: "Migração",
+ *     title: "Migração de website",
+ *     details: "Nullam libero mauris, consequat quis, varius et",
+ *     additional: "Obs obs obs",
+ *     body: "Alimentação com imagens e conteúdo bilíngue.",
+ *     date: "2020",
+ *     client: "Zipper Galeria",
+ *     imagePath: "012_zipper.webp",
+ *   },
+ * ]; */
 
 function App() {
+  const [projects, setProjects] = useState<IProject[]>();
   const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
 
   useEffect(() => {
@@ -42,7 +44,7 @@ function App() {
       import.meta.env.VITE_DATABASE_ID,
       import.meta.env.VITE_COLLECTION_ID_PROJECTS
     );
-    console.log(response, "### response  ###");
+    setProjects(response.documents as IProject[]);
   };
 
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
@@ -62,7 +64,7 @@ function App() {
         <div className="head-date">Ano</div>
       </header>
       <section className="projects">
-        {projects.map((project) => (
+        {projects?.map((project) => (
           <ProjectAccordion key={project.number} project={project} />
         ))}
       </section>

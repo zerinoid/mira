@@ -1,20 +1,9 @@
 import { FC, useState } from "react";
 import styles from "./ProjectAccordion.module.css";
+import IProject from "../models/Project";
 
 type Props = {
-  project: Project;
-};
-
-export type Project = {
-  number: number;
-  category: string;
-  details?: string;
-  additional?: string;
-  title: string;
-  body: string;
-  date: string;
-  client: string;
-  imagePath: string;
+  project: IProject;
 };
 
 const ProjectAccordion: FC<Props> = ({ project }) => {
@@ -65,7 +54,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
           <>
             <div className="[grid-area:body] mb-6">{project.body}</div>
             <div className="[grid-area:image]">
-              <img alt={project.title} src={project.imagePath} />
+              <img alt={project.title} src={project.image_path} />
             </div>
           </>
         )}
