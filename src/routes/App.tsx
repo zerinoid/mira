@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import "./App.css";
-import ProjectAccordion from "./components/ProjectAccordion";
-import SliderBio from "./components/SliderBio";
-import { databases } from "./lib/appwrite_client";
-import IProject from "./models/Project";
+import "../styles/App.css";
+import ProjectAccordion from "../components/ProjectAccordion";
+import SliderBio from "../components/SliderBio";
+import { databases } from "../lib/appwrite_client";
+import IProject from "../models/Project";
 
 /* const projects: Project[] = [
  *   {
