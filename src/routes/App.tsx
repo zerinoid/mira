@@ -50,7 +50,7 @@ function App() {
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
   return (
-    <>
+    <div className="text-red-500 bg-yellow-100 min-h-screen">
       <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
       <header className="header px-[5px] md:pt-4">
         <div className="logo"></div>
@@ -63,12 +63,12 @@ function App() {
         <div className="head-client">Cliente</div>
         <div className="head-date">Ano</div>
       </header>
-      <section className="projects">
+      <section className="flex flex-col">
         {projects?.map((project) => (
           <ProjectAccordion key={project.number} project={project} />
         ))}
       </section>
-    </>
+    </div>
   );
 }
 
