@@ -1,0 +1,152 @@
+{
+    "projectId": "65ea9a6922c3d2a1c008",
+    "projectName": "Mira",
+    "databases": [
+        {
+            "$id": "65eaa2a690610487f7f2",
+            "name": "mira_db_dev",
+            "$createdAt": "2024-03-08T05:31:18.592+00:00",
+            "$updatedAt": "2024-03-08T19:39:34.384+00:00",
+            "enabled": true
+        }
+    ],
+    "collections": [
+        {
+            "$id": "65eb6a28e7283634391e",
+            "$permissions": [
+                "create(\"any\")",
+                "read(\"any\")",
+                "update(\"any\")",
+                "delete(\"any\")"
+            ],
+            "databaseId": "65eaa2a690610487f7f2",
+            "name": "Projects",
+            "enabled": true,
+            "documentSecurity": false,
+            "attributes": [
+                {
+                    "key": "number",
+                    "type": "integer",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "min": 1,
+                    "max": 1000,
+                    "default": null
+                },
+                {
+                    "key": "category",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 30,
+                    "default": null
+                },
+                {
+                    "key": "title",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "details",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "additional",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "body",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 1000,
+                    "default": null
+                },
+                {
+                    "key": "date",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 15,
+                    "default": null
+                },
+                {
+                    "key": "client",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": true,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                },
+                {
+                    "key": "user_id",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 100,
+                    "default": null
+                },
+                {
+                    "key": "image_path",
+                    "type": "string",
+                    "status": "available",
+                    "error": "",
+                    "required": false,
+                    "array": false,
+                    "size": 50,
+                    "default": null
+                }
+            ],
+            "indexes": []
+        }
+    ],
+    "functions": [
+        {
+            "$id": "65f06a39929adbfc7f52",
+            "name": "Test Function",
+            "runtime": "node-18.0",
+            "execute": [],
+            "events": [],
+            "schedule": "",
+            "timeout": 15,
+            "enabled": true,
+            "logging": true,
+            "entrypoint": "src/main.js",
+            "commands": "npm install",
+            "ignore": [
+                "node_modules",
+                ".npm"
+            ],
+            "path": "functions/Test Function"
+        }
+    ]
+}
