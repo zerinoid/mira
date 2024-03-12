@@ -1,11 +1,8 @@
 import { FC } from "react";
-import styles from "./ProjectAccordion.module.css";
 
 const NewProject: FC = () => {
   return (
-    <div
-      className={`${styles.projectContainer} border-t border-red-500 px-[5px]`}
-    >
+    <div className="project border-t border-red-500 px-[5px]">
       <p>Novo Projeto: </p>
       <div className="[grid-area:number] cursor-pointer w-full">
         <input name="number" type="number" />

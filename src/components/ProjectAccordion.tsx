@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import styles from "./ProjectAccordion.module.css";
 import IProject from "../models/Project";
 
 type Props = {
@@ -13,9 +12,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
 
   {
     return (
-      <div
-        className={`${styles.projectContainer} border-t border-red-500 px-[5px]`}
-      >
+      <div className="project border-t border-red-500 px-[5px]">
         <div
           className="[grid-area:number] cursor-pointer w-full"
           onClick={opener}

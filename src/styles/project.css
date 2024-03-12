@@ -1,4 +1,4 @@
-.projectContainer {
+.project {
   display: grid;
   grid-template-columns: 5fr 40fr 8fr;
   grid-template-areas:
