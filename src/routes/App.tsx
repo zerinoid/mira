@@ -40,6 +40,7 @@ function App() {
   }, []);
 
   const getProjects = async () => {
+    //TODO ERROR HANDLING
     const response = await databases.listDocuments(
       import.meta.env.VITE_DATABASE_ID,
       import.meta.env.VITE_COLLECTION_ID_PROJECTS
