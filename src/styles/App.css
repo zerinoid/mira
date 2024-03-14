@@ -1,10 +1,5 @@
 @import 'project.css';
 
-#root {
-  max-width: 1540px;
-  margin: 0 auto;
-}
-
 .header {
   display: grid;
   grid-template-columns: 5fr 40fr 8fr;

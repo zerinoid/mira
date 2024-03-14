@@ -51,7 +51,7 @@ function App() {
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
   return (
-    <div className="text-red-500 bg-yellow-100 min-h-screen">
+    <div className="text-red-500 bg-yellow-100 min-h-screen container">
       <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
       <header className="header px-[5px] md:pt-4">
         <div className="logo"></div>

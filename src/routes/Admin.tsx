@@ -3,7 +3,7 @@ import NewProject from "../components/NewProject";
 
 const Admin: FC = () => {
   return (
-    <div className="text-white bg-black min-h-screen">
+    <div className="text-white bg-black min-h-screen container">
       <header className="header px-[5px] md:pt-4">
         <div className="logo"></div>
         <div className="title cursor-pointer">Mira</div>
