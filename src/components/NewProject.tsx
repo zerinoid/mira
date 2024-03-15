@@ -13,15 +13,20 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
+import { databases } from "@/lib/appwrite_client";
+import { ID } from "appwrite";
 
 type Props = {
   userId: string;
+  getProjects: () => void;
 };
 
 const projectSchema = z.object({
-  number: z.string({
-    required_error: "Obrigatório e maior que 0",
-  }),
+  number: z
+    .string({
+      required_error: "Obrigatório e maior que 0",
+    })
+    .min(1),
   category: z
     .string({
       required_error: "Campo obrigatório",
@@ -70,7 +75,7 @@ const projectSchema = z.object({
    *   .optional(), */
 });
 
-const NewProject: FC<Props> = ({ userId }) => {
+const NewProject: FC<Props> = ({ userId, getProjects }) => {
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -81,16 +86,23 @@ const NewProject: FC<Props> = ({ userId }) => {
       body: "",
       date: "",
       client: "",
-      /* user_id: userId,
-       * image_path: "", */
+      user_id: userId,
+      /* image_path: "", */
     },
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
-      console.log(values, "### values  ###");
+      await databases.createDocument(
+        import.meta.env.VITE_DATABASE_ID,
+        import.meta.env.VITE_COLLECTION_ID_PROJECTS,
+        ID.unique(),
+        values
+      );
+
+      getProjects();
     } catch (error) {
-      console.log(error, "### subtmit  ###");
+      console.error("Error ao submeter projeto: ", error);
     }
   };
 

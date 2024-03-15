@@ -80,7 +80,7 @@ function App() {
       {user?.$id ? (
         <section className="p-2 border-t border-red-500 ">
           <p>Novo Projeto: </p>
-          <NewProject userId={user.$id} />
+          <NewProject userId={user.$id} getProjects={getProjects} />
         </section>
       ) : null}
       <section className="flex flex-col">
