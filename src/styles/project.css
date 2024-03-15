@@ -9,7 +9,8 @@
     ". details ."
     ". additional ."
     ". body ."
-    ". image .";
+    ". image ."
+    ". button .";
   justify-items: start;
   text-align: start;
   padding-bottom: 20px;
@@ -19,7 +20,7 @@
     grid-template-areas:
       "number category title client date"
       ". details body image ."
-      ". additional body image .";
+      ". additional body image button";
     column-gap: 0.8vw;
   }
 }

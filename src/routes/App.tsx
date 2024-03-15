@@ -5,6 +5,7 @@ import SliderBio from "../components/SliderBio";
 import { account, databases } from "../lib/appwrite_client";
 import IProject from "../models/Project";
 import { Models } from "appwrite";
+import NewProject from "@/components/NewProject";
 
 /* const projects: Project[] = [
  *   {
@@ -76,6 +77,12 @@ function App() {
         <div className="head-client">Cliente</div>
         <div className="head-date">Ano</div>
       </header>
+      {user?.$id ? (
+        <section className="p-2 border-t border-red-500 ">
+          <p>Novo Projeto: </p>
+          <NewProject userId={user.$id} />
+        </section>
+      ) : null}
       <section className="flex flex-col">
         {projects?.map((project) => (
           <ProjectAccordion key={project.number} project={project} />
