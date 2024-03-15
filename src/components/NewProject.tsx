@@ -13,7 +13,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "./ui/textarea";
 import { Button } from "./ui/button";
-import { databases } from "@/lib/appwrite_client";
+import { databases, storage } from "@/lib/appwrite_client";
 import { ID } from "appwrite";
 
 type Props = {
@@ -64,15 +64,10 @@ const projectSchema = z.object({
       required_error: "Campo obrigatório",
     })
     .min(6, { message: "Deve ter mais de 6 caracteres" })
-    .max(50)
-    .optional(),
-  /* image_path: z
-   *   .string({
-   *     required_error: "Campo obrigatório",
-   *   })
-   *   .min(6)
-   *   .max(50)
-   *   .optional(), */
+    .max(50),
+  image_path: z.string({
+    required_error: "Campo obrigatório",
+  }),
 });
 
 const NewProject: FC<Props> = ({ userId, getProjects }) => {
@@ -87,18 +82,26 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
       date: "",
       client: "",
       user_id: userId,
-      /* image_path: "", */
+      image_path: "",
     },
   });
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
+      const imageResponse = await storage.createFile(
+        import.meta.env.VITE_IMAGE_BUCKET,
+        ID.unique(),
+        document.getElementById("uploader").files[0]
+      );
+
       await databases.createDocument(
         import.meta.env.VITE_DATABASE_ID,
         import.meta.env.VITE_COLLECTION_ID_PROJECTS,
         ID.unique(),
-        values
+        { ...values, image_path: imageResponse.$id }
       );
+
+      console.log(imageResponse, "### response  ###");
 
       getProjects();
     } catch (error) {
@@ -210,19 +213,19 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
           />
         </div>
         <div className="[grid-area:image]">
-          {/* <FormField
+          <FormField
             control={form.control}
             name="image_path"
             render={({ field }) => (
               <FormItem>
                 <FormLabel>Imagem</FormLabel>
                 <FormControl>
-                  <Input type="file" {...field} />
+                  <Input id="uploader" type="file" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
-          /> */}
+          />
         </div>
         <div className="[grid-area:client] cursor-pointer w-full">
           <FormField

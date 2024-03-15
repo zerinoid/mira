@@ -1,5 +1,6 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import IProject from "../models/Project";
+import { storage } from "@/lib/appwrite_client";
 
 type Props = {
   project: IProject;
@@ -7,6 +8,20 @@ type Props = {
 
 const ProjectAccordion: FC<Props> = ({ project }) => {
   const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false);
+  const [imagePath, setImagePath] = useState<string>("");
+
+  useEffect(() => {
+    getImage();
+  }, []);
+
+  const getImage = async () => {
+    const result = storage.getFileView(
+      import.meta.env.VITE_IMAGE_BUCKET,
+      project.image_path
+    );
+
+    setImagePath(result.href);
+  };
 
   const opener = () => setIsProjectOpen((prevState) => !prevState);
 
@@ -51,7 +66,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
           <>
             <div className="[grid-area:body] mb-6">{project.body}</div>
             <div className="[grid-area:image]">
-              <img alt={project.title} src={project.image_path} />
+              <img alt={project.title} src={imagePath} />
             </div>
           </>
         )}
