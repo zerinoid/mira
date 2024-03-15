@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,6 +27,18 @@ const loginSchema = z.object({
 
 const Login: FC = () => {
   const navigate = useNavigate();
+  useEffect(() => {
+    getAccount();
+  }, []);
+
+  const getAccount = async () => {
+    try {
+      await account.get();
+      navigate("/");
+    } catch (error) {
+      console.log("### nada  ###");
+    }
+  };
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
