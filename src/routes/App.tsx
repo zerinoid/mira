@@ -7,6 +7,7 @@ import IProject from "../models/Project";
 import { Models } from "appwrite";
 import NewProject from "@/components/NewProject";
 import { Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 /* const projects: Project[] = [
  *   {
@@ -41,8 +42,11 @@ function App() {
 
   useEffect(() => {
     getProjects();
-    getAccount();
   }, []);
+
+  useEffect(() => {
+    getAccount();
+  }, [user]);
 
   const getAccount = async () => {
     try {
@@ -62,18 +66,34 @@ function App() {
     setProjects(response.documents as IProject[]);
   };
 
+  const logout = async () => {
+    await account.deleteSession("current");
+    /* setUser({} as Models.User<Models.Preferences>); */
+  };
+
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
   return (
     <div className="text-red-500 bg-yellow-100 min-h-screen container">
       <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
-      <header className="header px-[5px] md:pt-4">
+      <header className="header px-[5px] pt-3 md:pt-4">
         <div className="logo"></div>
         <div className="title cursor-pointer" onClick={handleSliderBio}>
           Mira
         </div>
-        <div className="[grid-area:user]">
-          <Link to="login">LOGIN</Link>
+        <div className="[grid-area:user] flex items-center justify-end w-full">
+          {user?.$id ? (
+            <>
+              <p className="mr-5 hidden lg:block">Bem vinda, {user?.name}</p>
+              <Button
+                variant="outline"
+                className="border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : null}
         </div>
         <div className="head-number">#</div>
         <div className="head-category">Tipo</div>

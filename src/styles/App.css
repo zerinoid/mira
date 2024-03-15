@@ -12,7 +12,7 @@
   @media screen(lg) {
     grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
     grid-template-areas:
-      "logo title . . user"
+      "logo title . user user"
     "header-number header-category header-project header-client header-date";
     column-gap: 0.8vw;
   }
