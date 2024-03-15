@@ -41,11 +41,8 @@ function App() {
 
   useEffect(() => {
     getProjects();
-  }, []);
-
-  useEffect(() => {
     getAccount();
-  }, [user]);
+  }, []);
 
   const getAccount = async () => {
     try {
@@ -66,8 +63,12 @@ function App() {
   };
 
   const logout = async () => {
-    await account.deleteSession("current");
-    /* setUser({} as Models.User<Models.Preferences>); */
+    try {
+      await account.deleteSession("current");
+      setUser({} as Models.User<Models.Preferences>);
+    } catch (error) {
+      console.error("Erro ao deslogar usuário: ", error);
+    }
   };
 
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);

@@ -36,7 +36,7 @@ const Login: FC = () => {
       await account.get();
       navigate("/");
     } catch (error) {
-      console.log("### nada  ###");
+      console.error("Error ao recuperar usuário: ", error);
     }
   };
 
