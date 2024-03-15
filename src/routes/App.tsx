@@ -6,6 +6,7 @@ import { account, databases } from "../lib/appwrite_client";
 import IProject from "../models/Project";
 import { Models } from "appwrite";
 import NewProject from "@/components/NewProject";
+import { Link } from "react-router-dom";
 
 /* const projects: Project[] = [
  *   {
@@ -70,6 +71,9 @@ function App() {
         <div className="logo"></div>
         <div className="title cursor-pointer" onClick={handleSliderBio}>
           Mira
+        </div>
+        <div className="[grid-area:user]">
+          <Link to="login">LOGIN</Link>
         </div>
         <div className="head-number">#</div>
         <div className="head-category">Tipo</div>
