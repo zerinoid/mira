@@ -13,6 +13,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { account } from "@/lib/appwrite_client";
+import { useNavigate } from "react-router-dom";
 
 const loginSchema = z.object({
   email: z
@@ -24,6 +26,8 @@ const loginSchema = z.object({
 });
 
 const Login: FC = () => {
+  const navigate = useNavigate();
+
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -32,11 +36,14 @@ const Login: FC = () => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
-  }
+  const onSubmit = async function (values: z.infer<typeof loginSchema>) {
+    try {
+      await account.createEmailSession(values.email, values.password);
+      navigate("/");
+    } catch (error) {
+      console.error("Erro no login:", error);
+    }
+  };
 
   return (
     <section className="flex flex-col pt-16 md:p-0 md:justify-center space-y-10 items-center h-screen bg-yellow-100">

@@ -2,8 +2,9 @@ import { useEffect, useState } from "react";
 import "../styles/App.css";
 import ProjectAccordion from "../components/ProjectAccordion";
 import SliderBio from "../components/SliderBio";
-import { databases } from "../lib/appwrite_client";
+import { account, databases } from "../lib/appwrite_client";
 import IProject from "../models/Project";
+import { Models } from "appwrite";
 
 /* const projects: Project[] = [
  *   {
@@ -34,10 +35,21 @@ import IProject from "../models/Project";
 function App() {
   const [projects, setProjects] = useState<IProject[]>();
   const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
+  const [user, setUser] = useState<Models.User<Models.Preferences>>();
 
   useEffect(() => {
     getProjects();
+    getAccount();
   }, []);
+
+  const getAccount = async () => {
+    try {
+      const accountDetails = await account.get();
+      setUser(accountDetails);
+    } catch (error) {
+      setUser({} as Models.User<Models.Preferences>);
+    }
+  };
 
   const getProjects = async () => {
     //TODO ERROR HANDLING
