@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC } from "react";
+import { FC, FormEvent, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -65,16 +65,17 @@ const projectSchema = z.object({
     })
     .min(6, { message: "Deve ter mais de 6 caracteres" })
     .max(50),
-  image_path: z.string({
-    required_error: "Campo obrigatório",
-  }),
+  image_path: z.string().min(7).optional(),
+  file: z.instanceof(FileList).optional(),
 });
 
 const NewProject: FC<Props> = ({ userId, getProjects }) => {
+  const [file, setFile] = useState<File | undefined>();
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       number: "",
+      category: "",
       title: "",
       details: "",
       additional: "",
@@ -86,26 +87,54 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
     },
   });
 
+  const fileRef = form.register("file");
+
+  const onChangeImage = (e: FormEvent<HTMLInputElement>) => {
+    const target = e?.target as HTMLInputElement & {
+      files: FileList;
+    };
+    setFile(target.files[0]);
+  };
+
+  const uploadImage = async () => {
+    try {
+      if (file) {
+        return await storage.createFile(
+          import.meta.env.VITE_IMAGE_BUCKET,
+          ID.unique(),
+          file
+        );
+      } else {
+        throw new Error("Arquivo naõ carregado");
+      }
+    } catch (error) {
+      throw new Error("Erro no upload da imagem");
+    }
+  };
+
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
-      const imageResponse = await storage.createFile(
-        import.meta.env.VITE_IMAGE_BUCKET,
-        ID.unique(),
-        document.getElementById("uploader").files[0]
-      );
+      const imageResponse = await uploadImage();
+
+      if (typeof imageResponse === "undefined") {
+        throw new Error("Upload de imagem falhou");
+      }
+
+      delete values.file;
+      const project = { ...values, image_path: imageResponse.$id };
 
       await databases.createDocument(
         import.meta.env.VITE_DATABASE_ID,
         import.meta.env.VITE_COLLECTION_ID_PROJECTS,
         ID.unique(),
-        { ...values, image_path: imageResponse.$id }
+        project
       );
 
-      console.log(imageResponse, "### response  ###");
-
+      form.reset();
       getProjects();
     } catch (error) {
-      console.error("Error ao submeter projeto: ", error);
+      console.error("Erro ao submeter projeto: ", error);
+      throw new Error("Erro ao submeter projeto");
     }
   };
 
@@ -220,7 +249,14 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
               <FormItem>
                 <FormLabel>Imagem</FormLabel>
                 <FormControl>
-                  <Input id="uploader" type="file" {...field} />
+                  <Input
+                    className="file:text-red-500"
+                    id="uploader"
+                    type="file"
+                    {...fileRef}
+                    onChange={(e) => field.onChange(onChangeImage(e))}
+                    accept="image/png, image/webp, image/jpg, image/jpeg"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

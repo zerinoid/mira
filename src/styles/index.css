@@ -93,10 +93,4 @@
   a {
     text-decoration: underline;
   }
-
-  input {
-    border-radius: 5px;
-    border: 1px red solid;
-    @apply bg-yellow-100
-  }
 }
