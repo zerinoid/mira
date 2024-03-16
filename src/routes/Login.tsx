@@ -58,7 +58,7 @@ const Login: FC = () => {
   };
 
   return (
-    <section className="flex flex-col pt-16 md:p-0 md:justify-center space-y-10 items-center h-screen bg-yellow-100">
+    <section className="flex flex-col pt-16 md:p-0 md:justify-center space-y-10 items-center h-screen bg-background">
       <div>
         <img
           className="w-[100px] md:w-[unset]"

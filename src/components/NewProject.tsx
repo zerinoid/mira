@@ -178,7 +178,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
             )}
           />
         </div>
-        <div className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-red-500 lg:hidden" />
+        <div className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden" />
         <>
           <div className="[grid-area:details] w-full">
             <FormField
@@ -250,7 +250,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
                 <FormLabel>Imagem</FormLabel>
                 <FormControl>
                   <Input
-                    className="file:text-red-500"
+                    className="file:text-foreground"
                     id="uploader"
                     type="file"
                     {...fileRef}

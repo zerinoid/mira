@@ -74,7 +74,7 @@ function App() {
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
   return (
-    <div className="text-red-500 bg-yellow-100 min-h-screen container">
+    <div className="text-foreground bg-background min-h-screen container">
       <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
       <header className="header px-[5px] pt-3 md:pt-4">
         <div className="logo"></div>
@@ -102,7 +102,7 @@ function App() {
         <div className="head-date">Ano</div>
       </header>
       {user?.$id ? (
-        <section className="p-2 border-t border-red-500 ">
+        <section className="p-2 border-t border-foreground">
           <p>Novo Projeto: </p>
           <NewProject userId={user.$id} getProjects={getProjects} />
         </section>

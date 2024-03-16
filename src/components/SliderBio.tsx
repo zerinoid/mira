@@ -11,7 +11,7 @@ const CloseIcon = () => (
     height="18px"
     viewBox="0 0 512 512"
     xmlns="http://www.w3.org/2000/svg"
-    className="fill-red-500"
+    className="fill-background"
   >
     <polygon points="427.314 107.313 404.686 84.687 256 233.373 107.314 84.687 84.686 107.313 233.373 256 84.686 404.687 107.314 427.313 256 278.627 404.686 427.313 427.314 404.687 278.627 256 427.314 107.313" />
   </svg>
@@ -22,7 +22,7 @@ const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed top-0 left-0 bg-yellow-100 pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r border-red-500 w-[85vw] md:w-1/2 lg:w-1/3 h-screen cursor-pointer`}
+      } fixed top-0 left-0 text-background bg-foreground pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r w-[85vw] md:w-1/2 lg:w-1/3 h-screen cursor-pointer`}
     >
       <header
         className="flex justify-between items-center mb-12"

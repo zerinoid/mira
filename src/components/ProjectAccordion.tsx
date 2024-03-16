@@ -27,7 +27,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
 
   {
     return (
-      <div className="project border-t border-red-500 px-[5px]">
+      <div className="project border-t border-foreground px-[5px]">
         <div
           className="[grid-area:number] cursor-pointer w-full"
           onClick={opener}
@@ -42,7 +42,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
         </div>
         {isProjectOpen && (
           <div
-            className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-red-500 lg:hidden"
+            className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden"
             onClick={opener}
           />
         )}
