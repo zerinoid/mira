@@ -79,7 +79,7 @@ function App() {
       <header className="header px-[5px] pt-3 md:pt-4">
         <div className="logo"></div>
         <div className="title cursor-pointer" onClick={handleSliderBio}>
-          Mira
+          <img className="w-[20px]" alt="Logo Mira" src="MIRA2024.svg" />
         </div>
         <div className="[grid-area:user] flex items-center justify-end w-full">
           {user?.$id ? (
