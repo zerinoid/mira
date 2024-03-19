@@ -99,76 +99,80 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed top-0 left-0 text-background bg-foreground pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r w-[85vw] md:w-1/2 lg:w-1/3 h-screen pt-3`}
+      } absolute top-0 left-0 text-background min-h-screen grid grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_10fr_25fr_8fr] bg-gradient-to-r from-foreground to-transparent to-30%`}
     >
-      <header
-        className="flex justify-between items-center mb-12 cursor-pointer"
-        onClick={() => setIsOpen((isOpen) => !isOpen)}
-      >
-        <div className="w-[20px]">
-          <MiraLogo fill="background" />
-        </div>
-        <CloseIcon />
-      </header>
-      {isEditingBio ? (
-        <Form {...form}>
-          <form
-            className="mb-12 text-foreground"
-            onSubmit={form.handleSubmit(onSubmit)}
-          >
-            <FormField
-              control={form.control}
-              name="bio"
-              render={({ field }) => (
-                <FormItem className="mb-8">
-                  {/* <FormLabel>Bio</FormLabel> */}
-                  <FormControl>
-                    <Textarea
-                      wrap="hard"
-                      className="w-full"
-                      rows={15}
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <div className="flex justify-end">
-              <Button
-                className="self-end bg-foreground text-background border-background w-1/4"
-                variant="outline"
-                onClick={() => setIsEditingBio(false)}
-              >
-                Cancelar
-              </Button>
-              <Button
-                className="text-foreground self-end w-1/4 ml-3"
-                variant="outline"
-                type="submit"
-                isLoading={isLoadingSubmission}
-              >
-                Enviar
-              </Button>
-            </div>
-          </form>
-        </Form>
-      ) : (
-        <div className="flex flex-col mb-12">
-          <p className="mb-6 whitespace-pre-line">{bioText}</p>
-          {userId ? (
-            <Button
-              variant="outline"
-              className="text-foreground self-end"
-              onClick={() => setIsEditingBio(true)}
+      <div />
+      <div className="bg-foreground pt-3 md:pt-4" />
+      <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7">
+        <header
+          className="flex justify-between items-start mb-8 cursor-pointer"
+          onClick={() => setIsOpen((isOpen) => !isOpen)}
+        >
+          <div className="w-[20px]">
+            <MiraLogo fill="background" />
+          </div>
+          <CloseIcon />
+        </header>
+        {isEditingBio ? (
+          <Form {...form}>
+            <form
+              className="mb-12 text-foreground"
+              onSubmit={form.handleSubmit(onSubmit)}
             >
-              Editar
-            </Button>
-          ) : null}
-        </div>
-      )}
-      <p>Para saber mais favor entrar em contato</p>
-      <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
+              <FormField
+                control={form.control}
+                name="bio"
+                render={({ field }) => (
+                  <FormItem className="mb-8">
+                    {/* <FormLabel>Bio</FormLabel> */}
+                    <FormControl>
+                      <Textarea
+                        wrap="hard"
+                        className="w-full"
+                        rows={15}
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="flex justify-end">
+                <Button
+                  className="self-end bg-foreground text-background border-background w-1/4"
+                  variant="outline"
+                  onClick={() => setIsEditingBio(false)}
+                >
+                  Cancelar
+                </Button>
+                <Button
+                  className="text-foreground self-end w-1/4 ml-3"
+                  variant="outline"
+                  type="submit"
+                  isLoading={isLoadingSubmission}
+                >
+                  Enviar
+                </Button>
+              </div>
+            </form>
+          </Form>
+        ) : (
+          <div className="flex flex-col mb-12">
+            <p className="mb-6 whitespace-pre-line">{bioText}</p>
+            {userId ? (
+              <Button
+                variant="outline"
+                className="text-foreground self-end"
+                onClick={() => setIsEditingBio(true)}
+              >
+                Editar
+              </Button>
+            ) : null}
+          </div>
+        )}
+        <p>Para saber mais favor entrar em contato</p>
+        <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
+      </div>
     </aside>
   );
 };

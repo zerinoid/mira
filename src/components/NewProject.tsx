@@ -168,7 +168,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
             )}
           />
         </div>
-        <div className="[grid-area:category] cursor-pointer w-full">
+        <div className="[grid-area:category] cursor-pointer w-full lg:pr-2">
           <FormField
             control={form.control}
             name="category"
@@ -185,7 +185,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
         </div>
         <div className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden" />
         <>
-          <div className="[grid-area:details] w-full">
+          <div className="[grid-area:details] w-full lg:pr-2">
             <FormField
               control={form.control}
               name="details"
@@ -200,7 +200,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
               )}
             />
           </div>
-          <div className="[grid-area:additional] w-full">
+          <div className="[grid-area:additional] w-full lg:pr-2">
             <FormField
               control={form.control}
               name="additional"
@@ -216,7 +216,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
             />
           </div>
         </>
-        <div className="[grid-area:title] cursor-pointer w-full lg:mb-4">
+        <div className="[grid-area:title] cursor-pointer w-full lg:mb-4 lg:pr-2">
           <FormField
             control={form.control}
             name="title"
@@ -231,7 +231,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
             )}
           />
         </div>
-        <div className="[grid-area:body] w-full">
+        <div className="[grid-area:body] w-full lg:pr-2">
           <FormField
             control={form.control}
             name="body"
@@ -283,7 +283,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
             )}
           />
         </div>
-        <div className="[grid-area:date] cursor-pointer justify-self-end text-end pl-2 lg:pl-0">
+        <div className="[grid-area:date] cursor-pointer justify-self-end text-end pl-2">
           <FormField
             control={form.control}
             name="date"

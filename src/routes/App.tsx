@@ -63,7 +63,7 @@ function App() {
   const handleSliderBio = () => setIsBioOpen((prevState) => !prevState);
 
   return (
-    <div className="text-foreground bg-background min-h-screen container">
+    <div className="text-foreground bg-background min-h-screen container relative">
       <SliderBio
         userId={user?.$id}
         setIsOpen={setIsBioOpen}
