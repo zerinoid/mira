@@ -35,8 +35,8 @@ const bioSchema = z.object({
 
 const CloseIcon = () => (
   <svg
-    width="18px"
-    height="18px"
+    width="20px"
+    height="20px"
     viewBox="0 0 512 512"
     xmlns="http://www.w3.org/2000/svg"
     className="fill-background"
