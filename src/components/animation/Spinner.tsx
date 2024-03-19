@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 type Props = {
-  size: number;
+  size?: number;
 };
 
 const Spinner: FC<Props> = ({ size = 6 }) => {
