@@ -109,7 +109,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
           onClick={() => setIsOpen((isOpen) => !isOpen)}
         >
           <div className="w-[20px]">
-            <MiraLogo fill="background" />
+            <MiraLogo fill="white" />
           </div>
           <CloseIcon />
         </header>
