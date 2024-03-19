@@ -95,18 +95,23 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     }
   };
 
+  const onCloseSlider = () => {
+    setIsOpen((isOpen) => !isOpen);
+    /* setIsEditingBio(false); */
+  };
+
   return (
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } absolute top-0 left-0 text-background min-h-screen grid grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30%`}
+      } absolute top-0 left-0 text-background min-h-screen grid grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full`}
     >
       <div className="PADDING" />
       <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
       <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7">
         <header
           className="flex justify-between items-start mb-8 cursor-pointer"
-          onClick={() => setIsOpen((isOpen) => !isOpen)}
+          onClick={onCloseSlider}
         >
           <div className="w-[20px]">
             <MiraLogo fill="white" />
@@ -116,7 +121,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         {isEditingBio ? (
           <Form {...form}>
             <form
-              className="mb-12 text-foreground"
+              className="flex flex-col mb-12 text-foreground"
               onSubmit={form.handleSubmit(onSubmit)}
             >
               <FormField
@@ -173,7 +178,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         <p>Para saber mais favor entrar em contato</p>
         <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
       </div>
-      <div className="CLOSE" onClick={() => setIsOpen(false)}></div>
+      <div className="CLOSE" onClick={onCloseSlider}></div>
     </aside>
   );
 };
