@@ -26,7 +26,7 @@ const projectSchema = z.object({
     .string({
       required_error: "Obrigatório e maior que 0",
     })
-    .min(1),
+    .min(1, { message: "Obrigatório e maior que 0" }),
   category: z
     .string({
       required_error: "Campo obrigatório",
@@ -65,12 +65,15 @@ const projectSchema = z.object({
     })
     .min(6, { message: "Deve ter mais de 6 caracteres" })
     .max(50),
-  image_path: z.string().min(7).optional(),
+  image_path: z.string().min(7, { message: "Imagem é obrigatória" }).optional(),
   file: z.instanceof(FileList).optional(),
 });
 
 const NewProject: FC<Props> = ({ userId, getProjects }) => {
   const [file, setFile] = useState<File | undefined>();
+  const [isLoadingNewProject, setIsLoadingNewProject] =
+    useState<boolean>(false);
+
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
@@ -105,7 +108,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
           file
         );
       } else {
-        throw new Error("Arquivo naõ carregado");
+        throw new Error("Arquivo não carregado");
       }
     } catch (error) {
       throw new Error("Erro no upload da imagem");
@@ -114,6 +117,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
+      setIsLoadingNewProject(true);
       const imageResponse = await uploadImage();
 
       if (typeof imageResponse === "undefined") {
@@ -132,9 +136,10 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
 
       form.reset();
       getProjects();
+      setIsLoadingNewProject(false);
     } catch (error) {
+      setIsLoadingNewProject(false);
       console.error("Erro ao submeter projeto: ", error);
-      throw new Error("Erro ao submeter projeto");
     }
   };
 
@@ -307,7 +312,11 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
           )}
         />
 
-        <Button className="[grid-area:button] w-full self-end" type="submit">
+        <Button
+          isLoading={isLoadingNewProject}
+          className="[grid-area:button] w-full self-end"
+          type="submit"
+        >
           Enviar
         </Button>
       </form>

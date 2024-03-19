@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -27,6 +27,8 @@ const loginSchema = z.object({
 
 const Login: FC = () => {
   const navigate = useNavigate();
+  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(true);
+
   useEffect(() => {
     getAccount();
   }, []);
@@ -36,7 +38,7 @@ const Login: FC = () => {
       await account.get();
       navigate("/");
     } catch (error) {
-      console.error("Error ao recuperar usuário: ", error);
+      setIsLoadingLogin(false);
     }
   };
 
@@ -50,10 +52,12 @@ const Login: FC = () => {
 
   const onSubmit = async function (values: z.infer<typeof loginSchema>) {
     try {
+      setIsLoadingLogin(true);
       await account.createEmailSession(values.email, values.password);
       navigate("/");
     } catch (error) {
       console.error("Erro no login:", error);
+      setIsLoadingLogin(false);
     }
   };
 
@@ -82,9 +86,6 @@ const Login: FC = () => {
                       {...field}
                     />
                   </FormControl>
-                  {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
@@ -98,14 +99,15 @@ const Login: FC = () => {
                   <FormControl>
                     <Input type="password" placeholder="****" {...field} />
                   </FormControl>
-                  {/* <FormDescription>
-                  This is your public display name.
-                </FormDescription> */}
                   <FormMessage />
                 </FormItem>
               )}
             />
-            <Button className="w-full mt-4" type="submit">
+            <Button
+              isLoading={isLoadingLogin}
+              className="w-full mt-4"
+              type="submit"
+            >
               Entrar
             </Button>
           </form>
