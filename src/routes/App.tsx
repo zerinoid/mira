@@ -75,7 +75,11 @@ function App() {
 
   return (
     <div className="text-foreground bg-background min-h-screen container">
-      <SliderBio setIsOpen={setIsBioOpen} isOpen={isBioOpen} />
+      <SliderBio
+        userId={user?.$id}
+        setIsOpen={setIsBioOpen}
+        isOpen={isBioOpen}
+      />
       <header className="header px-[5px] pt-3 md:pt-4">
         <div className="logo"></div>
         <div className="title cursor-pointer" onClick={handleSliderBio}>

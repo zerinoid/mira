@@ -1,5 +1,5 @@
 import { databases } from "@/lib/appwrite_client";
-import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Dispatch, FC, SetStateAction, useState } from "react";
 import { Textarea } from "./ui/textarea";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -9,15 +9,21 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
+  /* FormLabel, */
   FormMessage,
 } from "@/components/ui/form";
 import { Button } from "./ui/button";
+import { Models } from "appwrite";
 
 type Props = {
+  userId: string;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
+
+interface Bio {
+  bio: string;
+}
 
 const bioSchema = z.object({
   bio: z
@@ -38,22 +44,18 @@ const CloseIcon = () => (
   </svg>
 );
 
-const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
+const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
   const [bioText, setBioText] = useState<string>("");
   const [isEditingBio, setIsEditingBio] = useState<boolean>(false);
+  const [isLoadingSubmission, setIsLoadingSubmission] =
+    useState<boolean>(false);
 
   const form = useForm<z.infer<typeof bioSchema>>({
     resolver: zodResolver(bioSchema),
-    defaultValues: {
-      bio: "",
-    },
+    defaultValues: async () => getBio(),
   });
 
-  useEffect(() => {
-    getBio();
-  }, []);
-
-  const getBio = async () => {
+  const getBio = async (): Promise<Bio> => {
     try {
       const response = await databases.getDocument(
         import.meta.env.VITE_DATABASE_ID,
@@ -61,8 +63,34 @@ const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
         import.meta.env.VITE_DOCUMENT_ID_BIO
       );
       setBioText(response.bio);
+
+      return response as Models.Document & Bio;
     } catch (error) {
-      console.log("Erro ao recuperar a bio: ", error);
+      const err = "Erro ao recuperar o texto da bio";
+      setBioText(err);
+      console.log(err + ":", error);
+      return { bio: "" };
+    }
+  };
+
+  const onSubmit = async (values: z.infer<typeof bioSchema>) => {
+    try {
+      setIsLoadingSubmission(true);
+      const response = await databases.updateDocument(
+        import.meta.env.VITE_DATABASE_ID,
+        import.meta.env.VITE_COLLECTION_ID_BIO,
+        import.meta.env.VITE_DOCUMENT_ID_BIO,
+        {
+          bio: values.bio,
+        }
+      );
+
+      setBioText(response.bio);
+      setIsEditingBio(false);
+      setIsLoadingSubmission(false);
+    } catch (error) {
+      setIsLoadingSubmission(false);
+      console.error("Error ao editar bio: ", error);
     }
   };
 
@@ -80,13 +108,16 @@ const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
       </header>
       {isEditingBio ? (
         <Form {...form}>
-          <form className="mb-12 text-foreground flex flex-col">
+          <form
+            className="mb-12 text-foreground"
+            onSubmit={form.handleSubmit(onSubmit)}
+          >
             <FormField
               control={form.control}
               name="bio"
               render={({ field }) => (
                 <FormItem className="mb-8">
-                  <FormLabel>Bio</FormLabel>
+                  {/* <FormLabel>Bio</FormLabel> */}
                   <FormControl>
                     <Textarea className="w-full" rows={15} {...field} />
                   </FormControl>
@@ -94,20 +125,40 @@ const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
                 </FormItem>
               )}
             />
-            <Button onClick={() => setIsEditingBio(false)} variant="outline" />
-            <Button
-              className="self-end text-foreground"
-              variant="outline"
-              type="submit"
-            >
-              Enviar
-            </Button>
+            <div className="flex justify-end">
+              <Button
+                className="self-end bg-foreground text-background border-background w-1/4"
+                variant="outline"
+                onClick={() => setIsEditingBio(false)}
+              >
+                Cancelar
+              </Button>
+              <Button
+                className="text-foreground self-end w-1/4 ml-3"
+                variant="outline"
+                type="submit"
+                isLoading={isLoadingSubmission}
+              >
+                Enviar
+              </Button>
+            </div>
           </form>
         </Form>
       ) : (
-        <p className="mb-12">{bioText}</p>
+        <div className="flex flex-col mb-12">
+          <p className="mb-6">{bioText}</p>
+          {userId ? (
+            <Button
+              variant="outline"
+              className="text-foreground self-end"
+              onClick={() => setIsEditingBio(true)}
+            >
+              Editar
+            </Button>
+          ) : null}
+        </div>
       )}
-      <p>Sed id ligula quis est convallis tempor.</p>
+      <p>Para saber mais favor entrar em contato</p>
       <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
     </aside>
   );
