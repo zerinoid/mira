@@ -99,10 +99,10 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } absolute top-0 left-0 text-background min-h-screen grid grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_10fr_25fr_8fr] bg-gradient-to-r from-foreground to-transparent to-30%`}
+      } absolute top-0 left-0 text-background min-h-screen grid grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30%`}
     >
-      <div />
-      <div className="bg-foreground pt-3 md:pt-4" />
+      <div className="PADDING" />
+      <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
       <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7">
         <header
           className="flex justify-between items-start mb-8 cursor-pointer"
@@ -173,6 +173,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         <p>Para saber mais favor entrar em contato</p>
         <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
       </div>
+      <div className="CLOSE" onClick={() => setIsOpen(false)}></div>
     </aside>
   );
 };

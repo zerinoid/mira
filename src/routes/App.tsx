@@ -22,6 +22,12 @@ function App() {
     getAccount();
   }, []);
 
+  useEffect(() => {
+    isBioOpen
+      ? document.querySelector("html")?.classList.add("overflow-hidden")
+      : document.querySelector("html")?.classList.remove("overflow-hidden");
+  }, [isBioOpen]);
+
   const getAccount = async () => {
     try {
       const accountDetails = await account.get();
