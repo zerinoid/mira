@@ -127,7 +127,7 @@ function App() {
       ) : null}
       {isLoadingProjects ? (
         <section className="flex flex-col justify-center items-center min-h-[200px]">
-          <Spinner size={11} />
+          <Spinner size={40} />
         </section>
       ) : projectsError ? (
         <section className="flex flex-col justify-center items-center min-h-[100px]">
