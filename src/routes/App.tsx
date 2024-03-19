@@ -69,8 +69,10 @@ function App() {
         isOpen={isBioOpen}
       />
       <header className="header px-[5px] pt-3 md:pt-4">
-        <div className="logo"></div>
-        <div className="title cursor-pointer" onClick={handleSliderBio}>
+        <div
+          className="[grid-area:title] cursor-pointer"
+          onClick={handleSliderBio}
+        >
           <img className="w-[20px]" alt="Logo Mira" src="MIRA2024.svg" />
         </div>
         <div className="[grid-area:user] flex items-center justify-end w-full">
@@ -87,11 +89,11 @@ function App() {
             </>
           ) : null}
         </div>
-        <div className="head-number">#</div>
-        <div className="head-category">Tipo</div>
-        <div className="head-project">Projeto</div>
-        <div className="head-client">Cliente</div>
-        <div className="head-date">Ano</div>
+        <div className="[grid-area:number]">#</div>
+        <div className="[grid-area:category] hidden lg:block">Tipo</div>
+        <div className="[grid-area:project]">Projeto</div>
+        <div className="[grid-area:client] hidden lg:block">Cliente</div>
+        <div className="[grid-area:date] justify-self-end">Ano</div>
       </header>
       {user?.$id ? (
         <section className="p-2 border-t border-foreground">

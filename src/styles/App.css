@@ -4,8 +4,8 @@
   display: grid;
   grid-template-columns: 5fr 40fr 8fr;
   grid-template-areas:
-    "logo title user"
-    "header-number header-project header-date";
+    ". title user"
+    "number project date";
   justify-items: start;
   row-gap: 1.6rem;
 
@@ -13,38 +13,7 @@
     grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
     grid-template-areas:
       "logo title . user user"
-    "header-number header-category header-project header-client header-date";
+    "number category project client date";
     column-gap: 0.8vw;
   }
-}
-
-.head-number {
-  grid-area: header-number;
-}
-
-.head-category {
-  display: none;
-  grid-area: header-category;
-
-  @media screen(lg) {
-    display: block;
-  }
-}
-
-.head-project {
-  grid-area: header-project;
-}
-
-.head-client {
-  display: none;
-  grid-area: header-client;
-
-  @media screen(lg) {
-    display: block;
-  }
-}
-
-.head-date {
-  grid-area: header-date;
-  justify-self: end;
 }
