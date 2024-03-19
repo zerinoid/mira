@@ -119,7 +119,12 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
                 <FormItem className="mb-8">
                   {/* <FormLabel>Bio</FormLabel> */}
                   <FormControl>
-                    <Textarea className="w-full" rows={15} {...field} />
+                    <Textarea
+                      wrap="hard"
+                      className="w-full"
+                      rows={15}
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -146,7 +151,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         </Form>
       ) : (
         <div className="flex flex-col mb-12">
-          <p className="mb-6">{bioText}</p>
+          <p className="mb-6 whitespace-pre-line">{bioText}</p>
           {userId ? (
             <Button
               variant="outline"
