@@ -1,9 +1,30 @@
-import { Dispatch, FC, SetStateAction } from "react";
+import { databases } from "@/lib/appwrite_client";
+import { Dispatch, FC, SetStateAction, useEffect, useState } from "react";
+import { Textarea } from "./ui/textarea";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Button } from "./ui/button";
 
 type Props = {
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
+
+const bioSchema = z.object({
+  bio: z
+    .string()
+    .min(200, { message: "Mínimo de 200 caracteres" })
+    .max(800, { message: "Máximo de 800 caracteres" }),
+});
 
 const CloseIcon = () => (
   <svg
@@ -18,29 +39,74 @@ const CloseIcon = () => (
 );
 
 const SliderBio: FC<Props> = ({ isOpen, setIsOpen }) => {
+  const [bioText, setBioText] = useState<string>("");
+  const [isEditingBio, setIsEditingBio] = useState<boolean>(false);
+
+  const form = useForm<z.infer<typeof bioSchema>>({
+    resolver: zodResolver(bioSchema),
+    defaultValues: {
+      bio: "",
+    },
+  });
+
+  useEffect(() => {
+    getBio();
+  }, []);
+
+  const getBio = async () => {
+    try {
+      const response = await databases.getDocument(
+        import.meta.env.VITE_DATABASE_ID,
+        import.meta.env.VITE_COLLECTION_ID_BIO,
+        import.meta.env.VITE_DOCUMENT_ID_BIO
+      );
+      setBioText(response.bio);
+    } catch (error) {
+      console.log("Erro ao recuperar a bio: ", error);
+    }
+  };
+
   return (
     <aside
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed top-0 left-0 text-background bg-foreground pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r w-[85vw] md:w-1/2 lg:w-1/3 h-screen cursor-pointer`}
+      } fixed top-0 left-0 text-background bg-foreground pl-12 pr-3 md:pt-4 lg:pl-16 lg:pr-7 border-r w-[85vw] md:w-1/2 lg:w-1/3 h-screen pt-3`}
     >
       <header
-        className="flex justify-between items-center mb-12"
+        className="flex justify-between items-center mb-12 cursor-pointer"
         onClick={() => setIsOpen((isOpen) => !isOpen)}
       >
         <span>Mira</span> <CloseIcon />
       </header>
-      <p className="mb-12">
-        Pellentesque dapibus suscipit ligula. Donec posuere augue in quam. Etiam
-        vel tortor sodales tellus ultricies commodo. Suspendisse potenti. Aenean
-        in sem ac leo mollis blandit. Donec neque quam, dignissim in, mollis
-        nec, sagittis eu, wisi. Phasellus lacus. Etiam laoreet quam sed arcu.
-        Phasellus at dui in ligula mollis ultricies. Integer placerat tristique
-        nisl. Praesent augue. Fusce commodo. Vestibulum convallis, lorem a
-        tempus semper, dui dui euismod elit, vitae placerat urna tortor vitae
-        lacus. Nullam libero mauris, consequat quis, varius et, dictum id, arcu.
-        Mauris mollis tincidunt felis.
-      </p>
+      {isEditingBio ? (
+        <Form {...form}>
+          <form className="mb-12 text-foreground flex flex-col">
+            <FormField
+              control={form.control}
+              name="bio"
+              render={({ field }) => (
+                <FormItem className="mb-8">
+                  <FormLabel>Bio</FormLabel>
+                  <FormControl>
+                    <Textarea className="w-full" rows={15} {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <Button onClick={() => setIsEditingBio(false)} variant="outline" />
+            <Button
+              className="self-end text-foreground"
+              variant="outline"
+              type="submit"
+            >
+              Enviar
+            </Button>
+          </form>
+        </Form>
+      ) : (
+        <p className="mb-12">{bioText}</p>
+      )}
       <p>Sed id ligula quis est convallis tempor.</p>
       <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
     </aside>
