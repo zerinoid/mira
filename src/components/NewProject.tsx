@@ -25,7 +25,7 @@ type Props = {
 
 const projectSchema = z.object({
   number: z
-    .string({
+    .number({
       required_error: "Obrigatório e maior que 0",
     })
     .min(1, { message: "Obrigatório e maior que 0" }),
@@ -80,6 +80,7 @@ const NewProject: FC<Props> = ({
   const [file, setFile] = useState<File | undefined>();
   const [isLoadingNewProject, setIsLoadingNewProject] =
     useState<boolean>(false);
+  const [filePreview, setFilePreview] = useState<string | ArrayBuffer | null>();
 
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
@@ -104,6 +105,13 @@ const NewProject: FC<Props> = ({
       files: FileList;
     };
     setFile(target.files[0]);
+
+    const file = new FileReader();
+    file.onload = () => {
+      setFilePreview(file.result);
+    };
+
+    file.readAsDataURL(target.files[0]);
   };
 
   const uploadImage = async () => {
@@ -150,7 +158,12 @@ const NewProject: FC<Props> = ({
       console.error("Erro ao submeter projeto: ", error);
     }
   };
-
+  /*
+   *   const clearImage = () => {
+   *     setFile(undefined);
+   *     setFilePreview(undefined);
+   *   };
+   *  */
   return (
     <Form {...form}>
       <form
@@ -254,12 +267,12 @@ const NewProject: FC<Props> = ({
             )}
           />
         </div>
-        <div className="[grid-area:image]">
+        <div className="[grid-area:image] flex w-full items-end">
           <FormField
             control={form.control}
             name="image_path"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="w-full">
                 <FormLabel>Imagem</FormLabel>
                 <FormControl>
                   <Input
@@ -275,6 +288,11 @@ const NewProject: FC<Props> = ({
               </FormItem>
             )}
           />
+          {filePreview ? (
+            <div className="w-[200px] ml-2">
+              <img alt="Preview da imagem" src={filePreview as string} />
+            </div>
+          ) : null}
         </div>
         <div className="[grid-area:client] cursor-pointer w-full">
           <FormField
