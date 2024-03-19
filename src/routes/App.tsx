@@ -7,37 +7,14 @@ import IProject from "../models/Project";
 import { Models } from "appwrite";
 import NewProject from "@/components/NewProject";
 import { Button } from "@/components/ui/button";
-
-/* const projects: Project[] = [
- *   {
- *     number: 2,
- *     category: "Editorial",
- *     details:
- *       "Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus, et dictum nunc justo sit amet elit.",
- *     additional: "Observações",
- *     title: "Orgulho e resistências: LGBT na ditadura",
- *     body: "Produção editorial de catálogo da exposição no Memorial da Resistência de São Paulo. ",
- *     date: "2020-2021",
- *     client: "Associação Pinacoteca Arte e Cultura",
- *     imagePath: "013_memorial.webp",
- *   },
- *   {
- *     number: 1,
- *     category: "Migração",
- *     title: "Migração de website",
- *     details: "Nullam libero mauris, consequat quis, varius et",
- *     additional: "Obs obs obs",
- *     body: "Alimentação com imagens e conteúdo bilíngue.",
- *     date: "2020",
- *     client: "Zipper Galeria",
- *     imagePath: "012_zipper.webp",
- *   },
- * ]; */
+import Spinner from "@/components/animation/Spinner";
 
 function App() {
   const [projects, setProjects] = useState<IProject[]>();
   const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
   const [user, setUser] = useState<Models.User<Models.Preferences>>();
+  const [projectsError, setProjectsError] = useState<string>("");
+  const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(true);
 
   useEffect(() => {
     getProjects();
@@ -54,12 +31,23 @@ function App() {
   };
 
   const getProjects = async () => {
-    //TODO ERROR HANDLING
-    const response = await databases.listDocuments(
-      import.meta.env.VITE_DATABASE_ID,
-      import.meta.env.VITE_COLLECTION_ID_PROJECTS
-    );
-    setProjects(response.documents as IProject[]);
+    try {
+      const response = await databases.listDocuments(
+        import.meta.env.VITE_DATABASE_ID,
+        import.meta.env.VITE_COLLECTION_ID_PROJECTS
+      );
+      const sortedProjects = response.documents.sort(
+        (a, b) => b.number - a.number
+      );
+      setProjects(sortedProjects as IProject[]);
+      setIsLoadingProjects(false);
+    } catch (error) {
+      setProjects([]);
+      const projectsError = "Erro ao requisitar projetos";
+      setProjectsError(projectsError);
+      setIsLoadingProjects(false);
+      console.error(projectsError + ":", error);
+    }
   };
 
   const logout = async () => {
@@ -111,11 +99,22 @@ function App() {
           <NewProject userId={user.$id} getProjects={getProjects} />
         </section>
       ) : null}
-      <section className="flex flex-col">
-        {projects?.map((project) => (
-          <ProjectAccordion key={project.number} project={project} />
-        ))}
-      </section>
+      {isLoadingProjects ? (
+        <section className="flex flex-col justify-center items-center min-h-[200px]">
+          <Spinner size={11} />
+        </section>
+      ) : projectsError ? (
+        <section className="flex flex-col justify-center items-center min-h-[100px]">
+          <p className="text-xl">:(</p>
+          <p className="text-xl">{projectsError}</p>
+        </section>
+      ) : (
+        <section className="flex flex-col">
+          {projects?.map((project) => (
+            <ProjectAccordion key={project.number} project={project} />
+          ))}
+        </section>
+      )}
     </div>
   );
 }

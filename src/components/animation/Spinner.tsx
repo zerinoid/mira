@@ -1,10 +1,14 @@
 import { FC } from "react";
 
-const Spinner: FC = () => {
+type Props = {
+  size: number;
+};
+
+const Spinner: FC<Props> = ({ size = 6 }) => {
   return (
     <svg
       aria-hidden="true"
-      className="w-6 h-6 text-gray-100 animate-spin dark:text-gray-600 fill-secondary"
+      className={`w-${size} h-${size} text-gray-100 animate-spin dark:text-gray-600 fill-secondary`}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
