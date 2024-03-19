@@ -19,6 +19,7 @@ function App() {
 
   const [projectsError, setProjectsError] = useState<string>("");
   const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(true);
+  const [nextProjectNumber, setNextProjectNumber] = useState<number>(0);
 
   useEffect(() => {
     getProjects();
@@ -40,6 +41,16 @@ function App() {
     }
   };
 
+  const handleNextProjectNumber = (projects: IProject[]): number => {
+    const projectNumbers = projects.map((project) => project.number);
+    let nextNumber = projects.length + 1;
+
+    while (projectNumbers.includes(nextNumber)) {
+      nextNumber++;
+    }
+    return nextNumber;
+  };
+
   const getProjects = async () => {
     try {
       const response = await databases.listDocuments(
@@ -51,6 +62,7 @@ function App() {
       );
       setProjects(sortedProjects as IProject[]);
       setIsLoadingProjects(false);
+      setNextProjectNumber(handleNextProjectNumber(response.documents));
     } catch (error) {
       setProjects([]);
       const projectsError = "Erro ao requisitar projetos";
@@ -122,6 +134,7 @@ function App() {
             userId={user.$id}
             getProjects={getProjects}
             setIsNewProjectOpen={setIsNewProjectOpen}
+            nextProjectNumber={nextProjectNumber}
           />
         </section>
       ) : null}

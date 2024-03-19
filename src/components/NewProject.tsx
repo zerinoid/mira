@@ -20,6 +20,7 @@ type Props = {
   userId: string;
   getProjects: () => void;
   setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>;
+  nextProjectNumber: number;
 };
 
 const projectSchema = z.object({
@@ -74,6 +75,7 @@ const NewProject: FC<Props> = ({
   userId,
   getProjects,
   setIsNewProjectOpen,
+  nextProjectNumber,
 }) => {
   const [file, setFile] = useState<File | undefined>();
   const [isLoadingNewProject, setIsLoadingNewProject] =
@@ -82,7 +84,7 @@ const NewProject: FC<Props> = ({
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
-      number: "",
+      number: nextProjectNumber,
       category: "",
       title: "",
       details: "",
