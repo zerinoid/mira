@@ -12,8 +12,11 @@ import MiraLogo from "@/components/icon/MiraLogo";
 
 function App() {
   const [projects, setProjects] = useState<IProject[]>();
-  const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
   const [user, setUser] = useState<Models.User<Models.Preferences>>();
+
+  const [isBioOpen, setIsBioOpen] = useState<boolean>(false);
+  const [isNewProjectOpen, setIsNewProjectOpen] = useState<boolean>(false);
+
   const [projectsError, setProjectsError] = useState<string>("");
   const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(true);
 
@@ -84,10 +87,19 @@ function App() {
             <MiraLogo />
           </div>
         </div>
-        <div className="[grid-area:user] flex items-center justify-end w-full">
+
+        <div className="[grid-area:user] flex justify-end w-full">
           {user?.$id ? (
             <>
-              <p className="mr-5 hidden lg:block">Bem vinda, {user?.name}</p>
+              <p className="mr-5 mt-2 hidden lg:block">
+                Bem vinda, {user?.name}
+              </p>
+              <Button
+                className="py-1 px-2 h-7 md:py-2 md:px-4 md:h-10 mr-2"
+                onClick={() => setIsNewProjectOpen((prevState) => !prevState)}
+              >
+                Novo Projeto
+              </Button>
               <Button
                 variant="outline"
                 className="border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
@@ -104,10 +116,13 @@ function App() {
         <div className="[grid-area:client] hidden lg:block">Cliente</div>
         <div className="[grid-area:date] justify-self-end">Ano</div>
       </header>
-      {user?.$id ? (
+      {user?.$id && isNewProjectOpen ? (
         <section className="p-2 border-t border-foreground">
-          <p>Novo Projeto: </p>
-          <NewProject userId={user.$id} getProjects={getProjects} />
+          <NewProject
+            userId={user.$id}
+            getProjects={getProjects}
+            setIsNewProjectOpen={setIsNewProjectOpen}
+          />
         </section>
       ) : null}
       {isLoadingProjects ? (

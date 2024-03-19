@@ -2,7 +2,7 @@
 
 .header {
   display: grid;
-  grid-template-columns: 5fr 40fr 8fr;
+  grid-template-columns: 5fr 20fr 28fr;
   grid-template-areas:
     ". title user"
     "number project date";

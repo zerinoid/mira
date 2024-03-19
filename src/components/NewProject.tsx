@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FC, FormEvent, useState } from "react";
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import {
@@ -19,6 +19,7 @@ import { ID } from "appwrite";
 type Props = {
   userId: string;
   getProjects: () => void;
+  setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>;
 };
 
 const projectSchema = z.object({
@@ -69,7 +70,11 @@ const projectSchema = z.object({
   file: z.instanceof(FileList).optional(),
 });
 
-const NewProject: FC<Props> = ({ userId, getProjects }) => {
+const NewProject: FC<Props> = ({
+  userId,
+  getProjects,
+  setIsNewProjectOpen,
+}) => {
   const [file, setFile] = useState<File | undefined>();
   const [isLoadingNewProject, setIsLoadingNewProject] =
     useState<boolean>(false);
@@ -137,6 +142,7 @@ const NewProject: FC<Props> = ({ userId, getProjects }) => {
       form.reset();
       getProjects();
       setIsLoadingNewProject(false);
+      setIsNewProjectOpen(false);
     } catch (error) {
       setIsLoadingNewProject(false);
       console.error("Erro ao submeter projeto: ", error);
