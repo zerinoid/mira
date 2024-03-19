@@ -16,7 +16,7 @@ import { Button } from "./ui/button";
 import { Models } from "appwrite";
 
 type Props = {
-  userId: string;
+  userId: string | undefined;
   isOpen: boolean;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
 };
