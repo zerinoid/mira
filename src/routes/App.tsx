@@ -8,6 +8,7 @@ import { Models } from "appwrite";
 import NewProject from "@/components/NewProject";
 import { Button } from "@/components/ui/button";
 import Spinner from "@/components/animation/Spinner";
+import MiraLogo from "@/components/icon/MiraLogo";
 
 function App() {
   const [projects, setProjects] = useState<IProject[]>();
@@ -73,7 +74,9 @@ function App() {
           className="[grid-area:title] cursor-pointer"
           onClick={handleSliderBio}
         >
-          <img className="w-[20px]" alt="Logo Mira" src="MIRA2024.svg" />
+          <div className="w-[20px]">
+            <MiraLogo />
+          </div>
         </div>
         <div className="[grid-area:user] flex items-center justify-end w-full">
           {user?.$id ? (

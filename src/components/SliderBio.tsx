@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/form";
 import { Button } from "./ui/button";
 import { Models } from "appwrite";
+import MiraLogo from "./icon/MiraLogo";
 
 type Props = {
   userId: string | undefined;
@@ -104,7 +105,10 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         className="flex justify-between items-center mb-12 cursor-pointer"
         onClick={() => setIsOpen((isOpen) => !isOpen)}
       >
-        <span>Mira</span> <CloseIcon />
+        <div className="w-[20px]">
+          <MiraLogo fill="background" />
+        </div>
+        <CloseIcon />
       </header>
       {isEditingBio ? (
         <Form {...form}>
