@@ -62,7 +62,9 @@ function App() {
       );
       setProjects(sortedProjects as IProject[]);
       setIsLoadingProjects(false);
-      setNextProjectNumber(handleNextProjectNumber(response.documents));
+      setNextProjectNumber(
+        handleNextProjectNumber(response.documents as IProject[])
+      );
     } catch (error) {
       setProjects([]);
       const projectsError = "Erro ao requisitar projetos";
