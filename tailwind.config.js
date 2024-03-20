@@ -17,8 +17,8 @@ module.exports = {
     },
     fontFamily: {
       serif:
-        'Lora, Georgia, "Times New Roman", Times, serif, system-ui, Avenir',
-      sans: "Montserrat, Arial, Helvetica, sans-serif",
+        '"Lora Variable", Georgia, "Times New Roman", Times, serif, system-ui, Avenir',
+      sans: '"Montserrat Variable", Arial, Helvetica, sans-serif',
     },
     extend: {
       colors: {
