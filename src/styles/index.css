@@ -98,5 +98,12 @@
 @layer components {
   .accordionTitleBar {
     @apply font-sans cursor-pointer w-full;
+    transition: font-weight 0.3s ease;
+  }
+
+  .accordionTitleBar:hover,
+  .accordionTitleBar:hover ~ .accordionTitleBar,
+  .accordionTitleBar:has(~ .accordionTitleBar:hover) {
+    font-weight: 600;
   }
 }
