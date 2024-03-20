@@ -64,7 +64,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
         </div>
         {isProjectOpen && (
           <>
-            <div className="[grid-area:body] mb-6 pr-2">{project.body}</div>
+            <div className="[grid-area:body] mb-6 lg:pr-2">{project.body}</div>
             <div className="[grid-area:image]">
               <img alt={project.title} src={imagePath} />
             </div>
