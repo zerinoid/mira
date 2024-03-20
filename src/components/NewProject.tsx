@@ -33,23 +33,24 @@ const ACCEPTED_MIME_TYPES = [
 ];
 
 const imageSchema = z.instanceof(FileList).superRefine((f, ctx) => {
-  f = f[0];
+  const file = f[0];
+
   // check mime type
-  if (!ACCEPTED_MIME_TYPES.includes(f.type)) {
+  if (!ACCEPTED_MIME_TYPES.includes(file.type)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: `Formatos aceitos: [${ACCEPTED_MIME_TYPES.join(", ")}] mas é ${
-        f.type
+        file.type
       }`,
     });
   }
   // check file size
-  if (f.size > 3 * MB_BYTES) {
+  if (file.size > 3 * MB_BYTES) {
     ctx.addIssue({
       code: z.ZodIssueCode.too_big,
       type: "array",
       message: `Limite de 3mb para arquivos, esse tem ${(
-        f.size / MB_BYTES
+        file.size / MB_BYTES
       ).toFixed(2)}mb`,
       maximum: 3 * MB_BYTES,
       inclusive: true,
@@ -129,7 +130,7 @@ const NewProject: FC<Props> = ({
       client: "",
       user_id: userId,
       image_path: "",
-      file: "",
+      file: null,
     },
   });
 
