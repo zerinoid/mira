@@ -23,6 +23,40 @@ type Props = {
   nextProjectNumber: number;
 };
 
+const MB_BYTES = 1000000; // 1 megabyte
+
+const ACCEPTED_MIME_TYPES = [
+  "image/gif",
+  "image/jpeg",
+  "image/png",
+  "image/jpg",
+];
+
+const imageSchema = z.instanceof(FileList).superRefine((f, ctx) => {
+  f = f[0];
+  // check mime type
+  if (!ACCEPTED_MIME_TYPES.includes(f.type)) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: `Formatos aceitos: [${ACCEPTED_MIME_TYPES.join(", ")}] mas é ${
+        f.type
+      }`,
+    });
+  }
+  // check file size
+  if (f.size > 3 * MB_BYTES) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.too_big,
+      type: "array",
+      message: `Limite de 3mb para arquivos, esse tem ${(
+        f.size / MB_BYTES
+      ).toFixed(2)}mb`,
+      maximum: 3 * MB_BYTES,
+      inclusive: true,
+    });
+  }
+});
+
 const projectSchema = z.object({
   number: z
     .number({
@@ -67,8 +101,8 @@ const projectSchema = z.object({
     })
     .min(6, { message: "Deve ter mais de 6 caracteres" })
     .max(50),
-  image_path: z.string().min(7, { message: "Imagem é obrigatória" }).optional(),
-  file: z.instanceof(FileList).optional(),
+  image_path: z.string().optional(),
+  file: imageSchema.optional(),
 });
 
 const NewProject: FC<Props> = ({
@@ -95,6 +129,7 @@ const NewProject: FC<Props> = ({
       client: "",
       user_id: userId,
       image_path: "",
+      file: "",
     },
   });
 
@@ -270,7 +305,7 @@ const NewProject: FC<Props> = ({
         <div className="[grid-area:image] flex w-full items-end">
           <FormField
             control={form.control}
-            name="image_path"
+            name="file"
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel>Imagem</FormLabel>
