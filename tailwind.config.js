@@ -15,6 +15,11 @@ module.exports = {
         "2xl": "1540px",
       },
     },
+    fontFamily: {
+      serif:
+        'Lora, Georgia, "Times New Roman", Times, serif, system-ui, Avenir',
+      sans: "Montserrat, Arial, Helvetica, sans-serif",
+    },
     extend: {
       colors: {
         red: "#ba141a",
