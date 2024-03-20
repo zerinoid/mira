@@ -124,7 +124,7 @@ const NewProject: FC<Props> = ({
         onSubmit={form.handleSubmit(onSubmit)}
         className="project gap-y-2 lg:gap-y-0"
       >
-        <div className="[grid-area:number] cursor-pointer pr-2">
+        <div className="[grid-area:number] pr-2">
           <FormField
             control={form.control}
             name="number"
@@ -143,7 +143,7 @@ const NewProject: FC<Props> = ({
             )}
           />
         </div>
-        <div className="[grid-area:category] cursor-pointer w-full lg:pr-2">
+        <div className="[grid-area:category] w-full lg:pr-2">
           <FormField
             control={form.control}
             name="category"
@@ -158,7 +158,7 @@ const NewProject: FC<Props> = ({
             )}
           />
         </div>
-        <div className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden" />
+        <div className="[grid-area:divider] w-full h-4 border-b border-foreground lg:hidden" />
         <>
           <div className="[grid-area:details] w-full lg:pr-2">
             <FormField
@@ -191,7 +191,7 @@ const NewProject: FC<Props> = ({
             />
           </div>
         </>
-        <div className="[grid-area:title] cursor-pointer w-full lg:mb-4 lg:pr-2">
+        <div className="[grid-area:title] w-full lg:mb-4 lg:pr-2">
           <FormField
             control={form.control}
             name="title"
@@ -221,7 +221,7 @@ const NewProject: FC<Props> = ({
             )}
           />
         </div>
-        <div className="[grid-area:image] flex w-full items-end">
+        <div className="[grid-area:image] flex lg:block w-full items-end">
           <FormField
             control={form.control}
             name="file"
@@ -243,12 +243,14 @@ const NewProject: FC<Props> = ({
             )}
           />
           {filePreview ? (
-            <div className="w-[200px] ml-2">
-              <img alt="Preview da imagem" src={filePreview as string} />
-            </div>
+            <img
+              alt="Preview da imagem"
+              src={filePreview as string}
+              className="max-w-[150px] lg:max-h-[100px] ml-2 lg:ml-0 lg:mt-2 object-contain"
+            />
           ) : null}
         </div>
-        <div className="[grid-area:client] cursor-pointer w-full">
+        <div className="[grid-area:client] w-full">
           <FormField
             control={form.control}
             name="client"
@@ -263,7 +265,7 @@ const NewProject: FC<Props> = ({
             )}
           />
         </div>
-        <div className="[grid-area:date] cursor-pointer justify-self-end text-end pl-2">
+        <div className="[grid-area:date] justify-self-end text-end pl-2">
           <FormField
             control={form.control}
             name="date"
