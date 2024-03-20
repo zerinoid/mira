@@ -95,3 +95,8 @@
   }
 }
 
+@layer components {
+  .accordionTitleBar {
+    @apply font-sans cursor-pointer w-full;
+  }
+}

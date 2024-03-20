@@ -28,14 +28,11 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
   {
     return (
       <div className="project border-t border-foreground px-[5px]">
-        <div
-          className="[grid-area:number] cursor-pointer w-full"
-          onClick={opener}
-        >
+        <div className="[grid-area:number] accordionTitleBar" onClick={opener}>
           {project.number}
         </div>
         <div
-          className="[grid-area:category] cursor-pointer w-full"
+          className="[grid-area:category] accordionTitleBar"
           onClick={opener}
         >
           {project.category}
@@ -57,7 +54,7 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
           </>
         )}
         <div
-          className="[grid-area:title] cursor-pointer w-full md:mb-4"
+          className="[grid-area:title] accordionTitleBar md:mb-4"
           onClick={opener}
         >
           {project.title}
@@ -70,14 +67,11 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
             </div>
           </>
         )}
-        <div
-          className="[grid-area:client] cursor-pointer w-full"
-          onClick={opener}
-        >
+        <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
           {project.client}
         </div>
         <div
-          className="[grid-area:date] cursor-pointer w-full justify-self-end text-end"
+          className="[grid-area:date] accordionTitleBar justify-self-end text-end"
           onClick={opener}
         >
           {project.date}
