@@ -15,6 +15,7 @@ import {
 import { Button } from "./ui/button";
 import { Models } from "appwrite";
 import MiraLogo from "./icon/MiraLogo";
+import { bioSchema } from "@/lib/validation/bio";
 
 type Props = {
   userId: string | undefined;
@@ -25,13 +26,6 @@ type Props = {
 interface Bio {
   bio: string;
 }
-
-const bioSchema = z.object({
-  bio: z
-    .string()
-    .min(200, { message: "Mínimo de 200 caracteres" })
-    .max(800, { message: "Máximo de 800 caracteres" }),
-});
 
 const CloseIcon = () => (
   <svg

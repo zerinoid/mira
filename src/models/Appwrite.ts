@@ -3,6 +3,6 @@ export default interface IAppwrite {
   $createdAt: string;
   $databaseId: string;
   $id: string;
-  $permissions: any[];
+  $permissions: string[];
   $updatedAt: string;
 }
