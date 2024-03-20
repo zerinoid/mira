@@ -130,7 +130,7 @@ const NewProject: FC<Props> = ({
       client: "",
       user_id: userId,
       image_path: "",
-      file: null,
+      file: undefined,
     },
   });
 
