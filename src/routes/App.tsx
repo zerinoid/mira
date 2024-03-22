@@ -58,8 +58,11 @@ function App() {
         import.meta.env.VITE_COLLECTION_ID_PROJECTS
       );
 
-      if (!response.documents.length)
+      if (!response.documents.length) {
         setProjectsError("Nenhum Projeto encontrado");
+      } else {
+        setProjectsError("");
+      }
 
       const sortedProjects = response.documents.sort(
         (a, b) => b.number - a.number
