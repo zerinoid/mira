@@ -296,7 +296,7 @@ const NewProject: FC<Props> = ({
 
         <Button
           isLoading={isLoadingNewProject}
-          className="[grid-area:button] w-full self-end"
+          className="[grid-area:buttons] w-full self-end"
           type="submit"
         >
           Enviar
