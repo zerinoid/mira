@@ -24,13 +24,14 @@ type Props = {
 
 type DeleteProps = {
   action: () => Promise<void>;
+  isDeleting: boolean;
 };
 
-const DeletionAlert: FC<DeleteProps> = ({ action }) => {
+const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="lg:w-28" variant="destructive">
+        <Button isLoading={isDeleting} className="w-28" variant="destructive">
           <Trash />
           Deletar
         </Button>
@@ -59,6 +60,7 @@ const DeletionAlert: FC<DeleteProps> = ({ action }) => {
 const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false);
   const [imagePath, setImagePath] = useState<string>("");
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   useEffect(() => {
     getImage();
@@ -77,24 +79,31 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
 
   const deleteProject = async () => {
     try {
-      await databases.deleteDocument(
-        import.meta.env.VITE_DATABASE_ID,
-        import.meta.env.VITE_COLLECTION_ID_PROJECTS,
-        project.$id
-      );
+      setIsDeleting(true);
 
-      deleteImage(project.image_path);
-      getProjects();
+      const deleteImageRes = await deleteImage(project.image_path);
+
+      if (deleteImageRes) {
+        await databases.deleteDocument(
+          import.meta.env.VITE_DATABASE_ID,
+          import.meta.env.VITE_COLLECTION_ID_PROJECTS,
+          project.$id
+        );
+        getProjects();
+      }
     } catch (error) {
+      setIsDeleting(false);
       console.error("Erro ao deletar projeto:", error);
     }
   };
 
-  const deleteImage = async (fileId: string) => {
+  const deleteImage = async (fileId: string): Promise<boolean> => {
     try {
       await storage.deleteFile(import.meta.env.VITE_IMAGE_BUCKET, fileId);
+      return true;
     } catch (error) {
       console.error("Erro ao deletar a imagem:", error);
+      return false;
     }
   };
 
@@ -136,11 +145,11 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
           </div>
           {userId ? (
             <div className="[grid-area:buttons] space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
-              <Button className="lg:w-28 bg-muted hover:bg-muted cursor-not-allowed">
+              <Button className="w-28 bg-muted hover:bg-muted cursor-not-allowed">
                 <PencilSquare />
                 Editar
               </Button>
-              <DeletionAlert action={deleteProject} />
+              <DeletionAlert action={deleteProject} isDeleting={isDeleting} />
             </div>
           ) : null}
         </>
