@@ -25,60 +25,55 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
 
   const opener = () => setIsProjectOpen((prevState) => !prevState);
 
-  {
-    return (
-      <div className="project border-t border-foreground px-[5px]">
-        <div className="[grid-area:number] accordionTitleBar" onClick={opener}>
-          {project.number}
-        </div>
-        <div
-          className="[grid-area:category] accordionTitleBar"
-          onClick={opener}
-        >
-          {project.category}
-        </div>
-        {isProjectOpen && (
-          <div
-            className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden"
-            onClick={opener}
-          />
-        )}
-        {isProjectOpen && (
-          <>
-            <div className="[grid-area:details] mb-6 lg:mb-0">
-              {project.details}
-            </div>
-            <div className="[grid-area:additional] mb-6">
-              {project.additional}
-            </div>
-          </>
-        )}
-        <div
-          className="[grid-area:title] accordionTitleBar md:mb-4"
-          onClick={opener}
-        >
-          {project.title}
-        </div>
-        {isProjectOpen && (
-          <>
-            <div className="[grid-area:body] mb-6 lg:pr-2">{project.body}</div>
-            <div className="[grid-area:image]">
-              <img alt={project.title} src={imagePath} />
-            </div>
-          </>
-        )}
-        <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
-          {project.client}
-        </div>
-        <div
-          className="[grid-area:date] accordionTitleBar justify-self-end text-end"
-          onClick={opener}
-        >
-          {project.date}
-        </div>
+  return (
+    <div className="project border-t border-foreground px-[5px]">
+      <div className="[grid-area:number] accordionTitleBar" onClick={opener}>
+        {project.number}
       </div>
-    );
-  }
+      <div className="[grid-area:category] accordionTitleBar" onClick={opener}>
+        {project.category}
+      </div>
+      {isProjectOpen && (
+        <div
+          className="[grid-area:divider] cursor-pointer w-full h-4 border-b border-foreground lg:hidden"
+          onClick={opener}
+        />
+      )}
+      {isProjectOpen && (
+        <>
+          <div className="[grid-area:details] mb-6 lg:mb-0">
+            {project.details}
+          </div>
+          <div className="[grid-area:additional] mb-6">
+            {project.additional}
+          </div>
+        </>
+      )}
+      <div
+        className="[grid-area:title] accordionTitleBar md:mb-4"
+        onClick={opener}
+      >
+        {project.title}
+      </div>
+      {isProjectOpen && (
+        <>
+          <div className="[grid-area:body] mb-6 lg:pr-2">{project.body}</div>
+          <div className="[grid-area:image]">
+            <img alt={project.title} src={imagePath} />
+          </div>
+        </>
+      )}
+      <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
+        {project.client}
+      </div>
+      <div
+        className="[grid-area:date] accordionTitleBar justify-self-end text-end"
+        onClick={opener}
+      >
+        {project.date}
+      </div>
+    </div>
+  );
 };
 
 export default ProjectAccordion;
