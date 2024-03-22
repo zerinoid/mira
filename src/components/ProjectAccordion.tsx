@@ -4,13 +4,59 @@ import { databases, storage } from "@/lib/appwrite_client";
 import { Button } from "./ui/button";
 import Trash from "./icon/Trash";
 import PencilSquare from "./icon/PencilSquare";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 
 type Props = {
   project: IProject;
   userId?: string;
+  getProjects: () => Promise<void>;
 };
 
-const ProjectAccordion: FC<Props> = ({ project, userId }) => {
+type DeleteProps = {
+  action: () => Promise<void>;
+};
+
+const DeletionAlert: FC<DeleteProps> = ({ action }) => {
+  return (
+    <AlertDialog>
+      <AlertDialogTrigger asChild>
+        <Button className="lg:w-28" variant="destructive">
+          <Trash />
+          Deletar
+        </Button>
+      </AlertDialogTrigger>
+      <AlertDialogContent className="font-sans">
+        <AlertDialogHeader>
+          <AlertDialogTitle>Apagar projeto?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Esta ação não pode ser desfeita
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
+          <AlertDialogAction
+            className="bg-destructive"
+            onClick={() => action()}
+          >
+            Apagar
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};
+
+const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false);
   const [imagePath, setImagePath] = useState<string>("");
 
@@ -31,15 +77,24 @@ const ProjectAccordion: FC<Props> = ({ project, userId }) => {
 
   const deleteProject = async () => {
     try {
-      const response = await databases.deleteDocument(
+      await databases.deleteDocument(
         import.meta.env.VITE_DATABASE_ID,
         import.meta.env.VITE_COLLECTION_ID_PROJECTS,
         project.$id
       );
 
-      console.log({ response });
+      deleteImage(project.image_path);
+      getProjects();
     } catch (error) {
       console.error("Erro ao deletar projeto:", error);
+    }
+  };
+
+  const deleteImage = async (fileId: string) => {
+    try {
+      await storage.deleteFile(import.meta.env.VITE_IMAGE_BUCKET, fileId);
+    } catch (error) {
+      console.error("Erro ao deletar a imagem:", error);
     }
   };
 
@@ -80,19 +135,12 @@ const ProjectAccordion: FC<Props> = ({ project, userId }) => {
             <img alt={project.title} src={imagePath} />
           </div>
           {userId ? (
-            <div className="[grid-area:buttons] w-full lg:flex flex-col lg:items-end justify-end">
-              <Button className="mr-4 lg:mr-0 lg:w-28 bg-muted hover:bg-muted cursor-not-allowed">
+            <div className="[grid-area:buttons] space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
+              <Button className="lg:w-28 bg-muted hover:bg-muted cursor-not-allowed">
                 <PencilSquare />
                 Editar
               </Button>
-              <Button
-                className="lg:w-28 lg:mt-2"
-                variant="destructive"
-                onClick={deleteProject}
-              >
-                <Trash />
-                Deletar
-              </Button>
+              <DeletionAlert action={deleteProject} />
             </div>
           ) : null}
         </>

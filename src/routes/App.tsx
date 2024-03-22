@@ -156,6 +156,7 @@ function App() {
               key={project.number}
               project={project}
               userId={user?.$id}
+              getProjects={getProjects}
             />
           ))}
         </section>
