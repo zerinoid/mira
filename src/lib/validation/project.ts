@@ -52,33 +52,38 @@ export const projectSchema = z.object({
       required_error: "Campo obrigatório",
     })
     .min(5, { message: "Deve ter mais de 5 caracteres" })
-    .max(30),
+    .max(30)
+    .trim(),
   title: z
     .string({
       required_error: "Campo brigatório",
     })
     .min(1)
-    .max(50),
-  details: z.string().min(0).max(100).optional(),
-  additional: z.string().min(0).max(50).optional(),
+    .max(50)
+    .trim(),
+  details: z.string().min(0).max(100).trim().optional(),
+  additional: z.string().min(0).max(50).trim().optional(),
   body: z
     .string({
       required_error: "Campo obrigatório",
     })
     .min(10, { message: "Deve ter mais de 10 caracteres" })
-    .max(1000),
+    .max(1000)
+    .trim(),
   date: z
     .string({
       required_error: "Campo obrigatório",
     })
     .min(4, { message: "Deve ter mais de 4 caracteres" })
-    .max(15),
+    .max(15)
+    .trim(),
   client: z
     .string({
       required_error: "Campo obrigatório",
     })
     .min(5, { message: "Deve ter mais de 5 caracteres" })
-    .max(50),
+    .max(50)
+    .trim(),
   user_id: z
     .string({
       required_error: "Campo obrigatório",
