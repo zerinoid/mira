@@ -11,29 +11,29 @@ const ACCEPTED_MIME_TYPES = [
 const imageSchema = z.instanceof(FileList).superRefine((f, ctx) => {
   const file = f[0];
 
-  //if (!file) {
-  //  ctx.addIssue({
-  //    code: z.ZodIssueCode.custom,
-  //    message: `Arquivo inválido`,
-  //  });
-  //}
+  if (!file) {
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      message: "Imagem é obrigatória",
+    });
+  }
 
   // check mime type
-  if (!ACCEPTED_MIME_TYPES.includes(file.type)) {
+  if (!ACCEPTED_MIME_TYPES.includes(file?.type)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
       message: `Formatos aceitos: [${ACCEPTED_MIME_TYPES.join(", ")}] mas é ${
-        file.type
+        file?.type
       }`,
     });
   }
   // check file size
-  if (file.size > 3 * MB_BYTES) {
+  if (file?.size > 3 * MB_BYTES) {
     ctx.addIssue({
       code: z.ZodIssueCode.too_big,
       type: "array",
       message: `Limite de 3mb para arquivos, esse tem ${(
-        file.size / MB_BYTES
+        file?.size / MB_BYTES
       ).toFixed(2)}mb`,
       maximum: 3 * MB_BYTES,
       inclusive: true,
