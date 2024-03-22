@@ -57,9 +57,14 @@ function App() {
         import.meta.env.VITE_DATABASE_ID,
         import.meta.env.VITE_COLLECTION_ID_PROJECTS
       );
+
+      if (!response.documents.length)
+        setProjectsError("Nenhum Projeto encontrado");
+
       const sortedProjects = response.documents.sort(
         (a, b) => b.number - a.number
       );
+
       setProjects(sortedProjects as IProject[]);
       setIsLoadingProjects(false);
       setNextProjectNumber(
@@ -130,6 +135,7 @@ function App() {
         <div className="[grid-area:client] hidden lg:block">Cliente</div>
         <div className="[grid-area:date] justify-self-end">Ano</div>
       </header>
+      {/* New Project form --------------------- */}
       {user?.$id && isNewProjectOpen ? (
         <section className="p-2 border-t border-foreground">
           <NewProject
@@ -140,11 +146,13 @@ function App() {
           />
         </section>
       ) : null}
+
+      {/* Loading Projects --------------------- */}
       {isLoadingProjects ? (
         <section className="flex flex-col justify-center items-center min-h-[200px]">
           <Spinner size={40} />
         </section>
-      ) : projectsError ? (
+      ) : projectsError || !projects?.length ? (
         <section className="flex flex-col justify-center items-center min-h-[100px]">
           <p className="text-xl">:(</p>
           <p className="text-xl">{projectsError}</p>
