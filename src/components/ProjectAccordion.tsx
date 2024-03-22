@@ -33,7 +33,7 @@ const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
       <AlertDialogTrigger asChild>
         <Button isLoading={isDeleting} className="w-28" variant="destructive">
           <Trash />
-          Deletar
+          Apagar
         </Button>
       </AlertDialogTrigger>
       <AlertDialogContent className="font-sans">
