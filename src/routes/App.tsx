@@ -152,7 +152,11 @@ function App() {
       ) : (
         <section className="flex flex-col">
           {projects?.map((project) => (
-            <ProjectAccordion key={project.number} project={project} />
+            <ProjectAccordion
+              key={project.number}
+              project={project}
+              userId={user?.$id}
+            />
           ))}
         </section>
       )}

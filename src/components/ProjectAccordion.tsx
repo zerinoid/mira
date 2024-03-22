@@ -1,12 +1,16 @@
 import { FC, useEffect, useState } from "react";
 import IProject from "../models/Project";
-import { storage } from "@/lib/appwrite_client";
+import { databases, storage } from "@/lib/appwrite_client";
+import { Button } from "./ui/button";
+import Trash from "./icon/Trash";
+import PencilSquare from "./icon/PencilSquare";
 
 type Props = {
   project: IProject;
+  userId?: string;
 };
 
-const ProjectAccordion: FC<Props> = ({ project }) => {
+const ProjectAccordion: FC<Props> = ({ project, userId }) => {
   const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false);
   const [imagePath, setImagePath] = useState<string>("");
 
@@ -24,6 +28,20 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
   };
 
   const opener = () => setIsProjectOpen((prevState) => !prevState);
+
+  const deleteProject = async () => {
+    try {
+      const response = await databases.deleteDocument(
+        import.meta.env.VITE_DATABASE_ID,
+        import.meta.env.VITE_COLLECTION_ID_PROJECTS,
+        project.$id
+      );
+
+      console.log({ response });
+    } catch (error) {
+      console.error("Erro ao deletar projeto:", error);
+    }
+  };
 
   return (
     <div className="project border-t border-foreground px-[5px]">
@@ -58,9 +76,25 @@ const ProjectAccordion: FC<Props> = ({ project }) => {
       {isProjectOpen && (
         <>
           <div className="[grid-area:body] mb-6 lg:pr-2">{project.body}</div>
-          <div className="[grid-area:image]">
+          <div className="[grid-area:image] mb-6 lg:mb-0">
             <img alt={project.title} src={imagePath} />
           </div>
+          {userId ? (
+            <div className="[grid-area:buttons] w-full lg:flex flex-col lg:items-end justify-end">
+              <Button className="mr-4 lg:mr-0 lg:w-28 bg-muted hover:bg-muted cursor-not-allowed">
+                <PencilSquare />
+                Editar
+              </Button>
+              <Button
+                className="lg:w-28 lg:mt-2"
+                variant="destructive"
+                onClick={deleteProject}
+              >
+                <Trash />
+                Deletar
+              </Button>
+            </div>
+          ) : null}
         </>
       )}
       <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
