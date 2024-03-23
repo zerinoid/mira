@@ -1,6 +1,12 @@
 import { FC } from "react";
-import { useEditor, EditorContent } from "@tiptap/react";
+import {
+  useEditor,
+  EditorContent,
+  BubbleMenu,
+  type Editor,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
+import RichTextTools from "./RichTextTools";
 type Props = {
   value: string;
   onChange: (richText: string) => void;
@@ -20,7 +26,14 @@ const RichText: FC<Props> = ({ value, onChange }) => {
       onChange(editor.getHTML());
     },
   });
-  return <EditorContent editor={editor} />;
+  return (
+    <>
+      <BubbleMenu editor={editor as Editor | undefined}>
+        <RichTextTools editor={editor} />
+      </BubbleMenu>
+      <EditorContent editor={editor} />
+    </>
+  );
 };
 
 export default RichText;
