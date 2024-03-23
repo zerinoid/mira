@@ -93,6 +93,10 @@
   a {
     text-decoration: underline;
   }
+
+  p {
+    @apply mb-2
+  }
 }
 
 @layer components {

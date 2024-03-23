@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useState, useRef, useLayoutEffect } from "react";
 import IProject from "../models/Project";
 import { databases, storage } from "@/lib/appwrite_client";
 import { Button } from "./ui/button";
@@ -62,9 +62,15 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const [imagePath, setImagePath] = useState<string>("");
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
+  const bodyRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement);
+
   useEffect(() => {
     getImage();
-  }, []);
+  });
+
+  useLayoutEffect(() => {
+    if (bodyRef && bodyRef.current) bodyRef.current.innerHTML = project.body;
+  });
 
   const getImage = async () => {
     const result = storage.getFileView(
@@ -121,7 +127,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
           <div className="[grid-area:additional] mb-6">
             {project.additional}
           </div>
-          <div className="[grid-area:body] mb-6 lg:pr-2">{project.body}</div>
+          <div className="[grid-area:body] mb-6 lg:pr-2" ref={bodyRef} />
           <div className="[grid-area:image] mb-6 lg:mb-0">
             <img alt={project.title} src={imagePath} />
           </div>

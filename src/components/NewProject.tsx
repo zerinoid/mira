@@ -16,6 +16,7 @@ import { databases, storage } from "@/lib/appwrite_client";
 import { ID } from "appwrite";
 import { projectSchema } from "@/lib/validation/project";
 import { z } from "zod";
+import RichText from "./RitchText";
 
 type Props = {
   userId: string;
@@ -214,7 +215,7 @@ const NewProject: FC<Props> = ({
               <FormItem>
                 <FormLabel>Corpo</FormLabel>
                 <FormControl>
-                  <Textarea rows={7} {...field} />
+                  <RichText value={field.value} onChange={field.onChange} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
