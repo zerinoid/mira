@@ -17,6 +17,7 @@ import { ID } from "appwrite";
 import { projectSchema } from "@/lib/validation/project";
 import { z } from "zod";
 import RichText from "./RitchText";
+import DOMPurify from "dompurify";
 
 type Props = {
   userId: string;
@@ -95,7 +96,11 @@ const NewProject: FC<Props> = ({
       }
 
       delete values.file;
-      const project = { ...values, image_path: imageResponse.$id };
+      const project = {
+        ...values,
+        image_path: imageResponse.$id,
+        body: DOMPurify.sanitize(values.body),
+      };
 
       await databases.createDocument(
         import.meta.env.VITE_DATABASE_ID,
