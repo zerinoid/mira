@@ -30,8 +30,7 @@
 
     --border: 358, 81%, 40%;
     --input: 358, 81%, 40%;
-    --ring: 222.2 84% 4.9%;
-
+    --ring: 358, 81%, 65%;
     --radius: 0.5rem;
 
     @apply font-serif;

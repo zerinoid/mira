@@ -14,6 +14,7 @@ const RichTextTools: FC<Props> = ({ editor }) => {
   return (
     <div className="bg-background border border-input rounded-md w-fit">
       <Toggle
+        className="rounded-none"
         size="sm"
         pressed={editor.isActive("bold")}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
@@ -21,6 +22,7 @@ const RichTextTools: FC<Props> = ({ editor }) => {
         <Bold className="h-4 w-4" />
       </Toggle>
       <Toggle
+        className="rounded-none"
         size="sm"
         pressed={editor.isActive("italic")}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
