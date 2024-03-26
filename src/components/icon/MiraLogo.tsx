@@ -1,12 +1,12 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 type Props = {
-  invert?: boolean;
-};
+  invert?: boolean
+}
 
 const MiraLogo: FC<Props> = ({ invert }) => {
-  let color = "fill-foreground";
-  if (invert) color = "fill-background";
+  let color = 'fill-foreground'
+  if (invert) color = 'fill-background'
 
   return (
     <svg
@@ -52,7 +52,7 @@ const MiraLogo: FC<Props> = ({ invert }) => {
         transform="translate(-38.15 -30.73)"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default MiraLogo;
+export default MiraLogo

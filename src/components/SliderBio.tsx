@@ -1,30 +1,30 @@
-import { databases } from "@/lib/appwrite_client";
-import { Dispatch, FC, SetStateAction, useState } from "react";
-import { Textarea } from "./ui/textarea";
-import { z } from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { databases } from '@/lib/appwrite_client'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
+import { Textarea } from './ui/textarea'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   /* FormLabel, */
-  FormMessage,
-} from "@/components/ui/form";
-import { Button } from "./ui/button";
-import { Models } from "appwrite";
-import MiraLogo from "./icon/MiraLogo";
-import { bioSchema } from "@/lib/validation/bio";
+  FormMessage
+} from '@/components/ui/form'
+import { Button } from './ui/button'
+import { Models } from 'appwrite'
+import MiraLogo from './icon/MiraLogo'
+import { bioSchema } from '@/lib/validation/bio'
 
 type Props = {
-  userId: string | undefined;
-  isOpen: boolean;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
-};
+  userId: string | undefined
+  isOpen: boolean
+  setIsOpen: Dispatch<SetStateAction<boolean>>
+}
 
 interface Bio {
-  bio: string;
+  bio: string
 }
 
 const CloseIcon = () => (
@@ -37,67 +37,66 @@ const CloseIcon = () => (
   >
     <polygon points="427.314 107.313 404.686 84.687 256 233.373 107.314 84.687 84.686 107.313 233.373 256 84.686 404.687 107.314 427.313 256 278.627 404.686 427.313 427.314 404.687 278.627 256 427.314 107.313" />
   </svg>
-);
+)
 
 const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
-  const [bioText, setBioText] = useState<string>("");
-  const [isEditingBio, setIsEditingBio] = useState<boolean>(false);
-  const [isLoadingSubmission, setIsLoadingSubmission] =
-    useState<boolean>(false);
+  const [bioText, setBioText] = useState<string>('')
+  const [isEditingBio, setIsEditingBio] = useState<boolean>(false)
+  const [isLoadingSubmission, setIsLoadingSubmission] = useState<boolean>(false)
 
   const form = useForm<z.infer<typeof bioSchema>>({
     resolver: zodResolver(bioSchema),
-    defaultValues: async () => getBio(),
-  });
+    defaultValues: async () => getBio()
+  })
 
   const getBio = async (): Promise<Bio> => {
     try {
       const response = await databases.getDocument(
         import.meta.env.VITE_DATABASE_ID as string,
         import.meta.env.VITE_COLLECTION_ID_BIO as string,
-        import.meta.env.VITE_DOCUMENT_ID_BIO as string,
-      );
-      setBioText(response.bio as string);
+        import.meta.env.VITE_DOCUMENT_ID_BIO as string
+      )
+      setBioText(response.bio as string)
 
-      return response as Models.Document & Bio;
+      return response as Models.Document & Bio
     } catch (error) {
-      const err = "Erro ao recuperar o texto da bio";
-      setBioText(err);
-      console.log(err + ":", error);
-      return { bio: "" };
+      const err = 'Erro ao recuperar o texto da bio'
+      setBioText(err)
+      console.log(err + ':', error)
+      return { bio: '' }
     }
-  };
+  }
 
   const onSubmit = async (values: z.infer<typeof bioSchema>) => {
     try {
-      setIsLoadingSubmission(true);
+      setIsLoadingSubmission(true)
       const response = await databases.updateDocument(
         import.meta.env.VITE_DATABASE_ID as string,
         import.meta.env.VITE_COLLECTION_ID_BIO as string,
         import.meta.env.VITE_DOCUMENT_ID_BIO as string,
         {
-          bio: values.bio,
-        },
-      );
+          bio: values.bio
+        }
+      )
 
-      setBioText(response.bio as string);
-      setIsEditingBio(false);
-      setIsLoadingSubmission(false);
+      setBioText(response.bio as string)
+      setIsEditingBio(false)
+      setIsLoadingSubmission(false)
     } catch (error) {
-      setIsLoadingSubmission(false);
-      console.error("Error ao editar bio: ", error);
+      setIsLoadingSubmission(false)
+      console.error('Error ao editar bio: ', error)
     }
-  };
+  }
 
   const onCloseSlider = () => {
-    setIsOpen((isOpen) => !isOpen);
+    setIsOpen(isOpen => !isOpen)
     /* setIsEditingBio(false); */
-  };
+  }
 
   return (
     <aside
       className={`${
-        isOpen ? "grid" : "hidden"
+        isOpen ? 'grid' : 'hidden'
       } font-sans absolute top-0 left-0 text-background min-h-screen grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full`}
     >
       <div className="PADDING" />
@@ -174,7 +173,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
       </div>
       <div className="CLOSE" onClick={onCloseSlider}></div>
     </aside>
-  );
-};
+  )
+}
 
-export default SliderBio;
+export default SliderBio

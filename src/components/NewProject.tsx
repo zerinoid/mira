@@ -1,74 +1,73 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { Dispatch, FC, FormEvent, SetStateAction, useState } from "react";
-import { useForm } from "react-hook-form";
+import { zodResolver } from '@hookform/resolvers/zod'
+import { Dispatch, FC, FormEvent, SetStateAction, useState } from 'react'
+import { useForm } from 'react-hook-form'
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "./ui/textarea";
-import { Button } from "./ui/button";
-import { databases, storage } from "@/lib/appwrite_client";
-import { ID } from "appwrite";
-import { projectSchema } from "@/lib/validation/project";
-import { z } from "zod";
-import RichText from "./RitchText";
-import DOMPurify from "dompurify";
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Textarea } from './ui/textarea'
+import { Button } from './ui/button'
+import { databases, storage } from '@/lib/appwrite_client'
+import { ID } from 'appwrite'
+import { projectSchema } from '@/lib/validation/project'
+import { z } from 'zod'
+import RichText from './RitchText'
+import DOMPurify from 'dompurify'
 
 type Props = {
-  userId: string;
-  getProjects: () => void;
-  setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>;
-  nextProjectNumber: number;
-};
+  userId: string
+  getProjects: () => void
+  setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>
+  nextProjectNumber: number
+}
 
 const NewProject: FC<Props> = ({
   userId,
   getProjects,
   setIsNewProjectOpen,
-  nextProjectNumber,
+  nextProjectNumber
 }) => {
-  const [file, setFile] = useState<File | undefined>();
-  const [isLoadingNewProject, setIsLoadingNewProject] =
-    useState<boolean>(false);
-  const [filePreview, setFilePreview] = useState<string | ArrayBuffer | null>();
+  const [file, setFile] = useState<File | undefined>()
+  const [isLoadingNewProject, setIsLoadingNewProject] = useState<boolean>(false)
+  const [filePreview, setFilePreview] = useState<string | ArrayBuffer | null>()
 
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
       number: nextProjectNumber,
-      category: "",
-      title: "",
-      details: "",
-      additional: "",
-      body: "",
-      date: "",
-      client: "",
+      category: '',
+      title: '',
+      details: '',
+      additional: '',
+      body: '',
+      date: '',
+      client: '',
       user_id: userId,
-      image_path: "",
-      file: undefined,
-    },
-  });
+      image_path: '',
+      file: undefined
+    }
+  })
 
-  const fileRef = form.register("file");
+  const fileRef = form.register('file')
 
   const onChangeImage = (e: FormEvent<HTMLInputElement>) => {
     const target = e?.target as HTMLInputElement & {
-      files: FileList;
-    };
-    setFile(target.files[0]);
+      files: FileList
+    }
+    setFile(target.files[0])
 
-    const file = new FileReader();
+    const file = new FileReader()
     file.onload = () => {
-      setFilePreview(file.result);
-    };
+      setFilePreview(file.result)
+    }
 
-    file.readAsDataURL(target.files[0]);
-  };
+    file.readAsDataURL(target.files[0])
+  }
 
   const uploadImage = async () => {
     try {
@@ -77,47 +76,47 @@ const NewProject: FC<Props> = ({
           import.meta.env.VITE_IMAGE_BUCKET as string,
           ID.unique(),
           file
-        );
+        )
       } else {
-        throw new Error("Arquivo não carregado");
+        throw new Error('Arquivo não carregado')
       }
     } catch (error) {
-      throw new Error("Erro no upload da imagem");
+      throw new Error('Erro no upload da imagem')
     }
-  };
+  }
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
-      setIsLoadingNewProject(true);
-      const imageResponse = await uploadImage();
+      setIsLoadingNewProject(true)
+      const imageResponse = await uploadImage()
 
-      if (typeof imageResponse === "undefined") {
-        throw new Error("Upload de imagem falhou");
+      if (typeof imageResponse === 'undefined') {
+        throw new Error('Upload de imagem falhou')
       }
 
-      delete values.file;
+      delete values.file
       const project = {
         ...values,
         image_path: imageResponse.$id,
-        body: DOMPurify.sanitize(values.body),
-      };
+        body: DOMPurify.sanitize(values.body)
+      }
 
       await databases.createDocument(
         import.meta.env.VITE_DATABASE_ID as string,
         import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
         ID.unique(),
         project
-      );
+      )
 
-      form.reset();
-      getProjects();
-      setIsLoadingNewProject(false);
-      setIsNewProjectOpen(false);
+      form.reset()
+      getProjects()
+      setIsLoadingNewProject(false)
+      setIsNewProjectOpen(false)
     } catch (error) {
-      setIsLoadingNewProject(false);
-      console.error("Erro ao submeter projeto: ", error);
+      setIsLoadingNewProject(false)
+      console.error('Erro ao submeter projeto: ', error)
     }
-  };
+  }
   /*
    *   const clearImage = () => {
    *     setFile(undefined);
@@ -240,7 +239,7 @@ const NewProject: FC<Props> = ({
                     id="uploader"
                     type="file"
                     {...fileRef}
-                    onChange={(e) => field.onChange(onChangeImage(e))}
+                    onChange={e => field.onChange(onChangeImage(e))}
                     accept="image/png, image/webp, image/jpg, image/jpeg"
                   />
                 </FormControl>
@@ -309,7 +308,7 @@ const NewProject: FC<Props> = ({
         </Button>
       </form>
     </Form>
-  );
-};
+  )
+}
 
-export default NewProject;
+export default NewProject

@@ -1,9 +1,9 @@
-import { FC, useEffect, useState, useRef, useLayoutEffect } from "react";
-import IProject from "../models/Project";
-import { databases, storage } from "@/lib/appwrite_client";
-import { Button } from "./ui/button";
-import Trash from "./icon/Trash";
-import PencilSquare from "./icon/PencilSquare";
+import { FC, useEffect, useState, useRef, useLayoutEffect } from 'react'
+import IProject from '../models/Project'
+import { databases, storage } from '@/lib/appwrite_client'
+import { Button } from './ui/button'
+import Trash from './icon/Trash'
+import PencilSquare from './icon/PencilSquare'
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,19 +13,19 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog'
 
 type Props = {
-  project: IProject;
-  userId?: string;
-  getProjects: () => Promise<void>;
-};
+  project: IProject
+  userId?: string
+  getProjects: () => Promise<void>
+}
 
 type DeleteProps = {
-  action: () => Promise<void>;
-  isDeleting: boolean;
-};
+  action: () => Promise<void>
+  isDeleting: boolean
+}
 
 const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
   return (
@@ -54,67 +54,67 @@ const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
-  );
-};
+  )
+}
 
 const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
-  const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false);
-  const [imagePath, setImagePath] = useState<string>("");
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false)
+  const [imagePath, setImagePath] = useState<string>('')
+  const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
-  const bodyRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement);
+  const bodyRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
 
   useEffect(() => {
-    getImage();
-  });
+    getImage()
+  })
 
   useLayoutEffect(() => {
-    if (bodyRef && bodyRef.current) bodyRef.current.innerHTML = project.body;
-  });
+    if (bodyRef && bodyRef.current) bodyRef.current.innerHTML = project.body
+  })
 
   const getImage = () => {
     const result = storage.getFileView(
       import.meta.env.VITE_IMAGE_BUCKET as string,
       project.image_path
-    );
+    )
 
-    setImagePath(result.href);
-  };
+    setImagePath(result.href)
+  }
 
-  const opener = () => setIsProjectOpen((prevState) => !prevState);
+  const opener = () => setIsProjectOpen(prevState => !prevState)
 
   const deleteProject = async () => {
     try {
-      setIsDeleting(true);
+      setIsDeleting(true)
 
-      const deleteImageRes = await deleteImage(project.image_path);
+      const deleteImageRes = await deleteImage(project.image_path)
 
       if (deleteImageRes) {
         await databases.deleteDocument(
           import.meta.env.VITE_DATABASE_ID as string,
           import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
           project.$id
-        );
-        await getProjects();
+        )
+        await getProjects()
       }
     } catch (error) {
-      setIsDeleting(false);
-      console.error("Erro ao deletar projeto:", error);
+      setIsDeleting(false)
+      console.error('Erro ao deletar projeto:', error)
     }
-  };
+  }
 
   const deleteImage = async (fileId: string): Promise<boolean> => {
     try {
       await storage.deleteFile(
         import.meta.env.VITE_IMAGE_BUCKET as string,
         fileId
-      );
-      return true;
+      )
+      return true
     } catch (error) {
-      console.error("Erro ao deletar a imagem:", error);
-      return false;
+      console.error('Erro ao deletar a imagem:', error)
+      return false
     }
-  };
+  }
 
   return (
     <div className="project border-t border-foreground px-[5px]">
@@ -168,7 +168,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
         {project.date}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ProjectAccordion;
+export default ProjectAccordion

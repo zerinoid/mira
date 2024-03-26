@@ -1,8 +1,8 @@
-import { Button } from "@/components/ui/button";
-import { FC, useEffect, useState } from "react";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from '@/components/ui/button'
+import { FC, useEffect, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -10,56 +10,56 @@ import {
   FormField,
   FormItem,
   FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { account } from "@/lib/appwrite_client";
-import { useNavigate } from "react-router-dom";
+  FormMessage
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { account } from '@/lib/appwrite_client'
+import { useNavigate } from 'react-router-dom'
 
 const loginSchema = z.object({
   email: z
     .string()
-    .email({ message: "Endereço de mail inválido" })
+    .email({ message: 'Endereço de mail inválido' })
     .min(5)
     .max(30),
-  password: z.string(),
-});
+  password: z.string()
+})
 
 const Login: FC = () => {
-  const navigate = useNavigate();
-  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(true);
+  const navigate = useNavigate()
+  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(true)
 
   useEffect(() => {
-    void getAccount();
-  }, []);
+    void getAccount()
+  }, [])
 
   const getAccount = async () => {
     try {
-      await account.get();
-      navigate("/");
+      await account.get()
+      navigate('/')
     } catch (error) {
-      setIsLoadingLogin(false);
+      setIsLoadingLogin(false)
     }
-  };
+  }
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: "",
-      password: "",
-    },
-  });
+      email: '',
+      password: ''
+    }
+  })
 
   const onSubmit = async function (values: z.infer<typeof loginSchema>) {
     try {
-      setIsLoadingLogin(true);
-      await account.createEmailSession(values.email, values.password);
-      navigate("/");
+      setIsLoadingLogin(true)
+      await account.createEmailSession(values.email, values.password)
+      navigate('/')
     } catch (error) {
-      console.error("Erro no login:", error);
-      setIsLoadingLogin(false);
+      console.error('Erro no login:', error)
+      setIsLoadingLogin(false)
     }
-  };
+  }
 
   return (
     <section className="flex flex-col pt-16 md:p-0 md:justify-center space-y-10 items-center h-screen bg-background">
@@ -114,7 +114,7 @@ const Login: FC = () => {
         </Form>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

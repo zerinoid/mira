@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC } from 'react'
 
 type Props = {
-  size?: number;
-};
+  size?: number
+}
 
 const Spinner: FC<Props> = ({ size = 22 }) => {
   return (
@@ -24,7 +24,7 @@ const Spinner: FC<Props> = ({ size = 22 }) => {
         fill="currentFill"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default Spinner;
+export default Spinner
