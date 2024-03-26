@@ -72,7 +72,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
     if (bodyRef && bodyRef.current) bodyRef.current.innerHTML = project.body;
   });
 
-  const getImage = async () => {
+  const getImage = () => {
     const result = storage.getFileView(
       import.meta.env.VITE_IMAGE_BUCKET as string,
       project.image_path
@@ -95,7 +95,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
           import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
           project.$id
         );
-        getProjects();
+        await getProjects();
       }
     } catch (error) {
       setIsDeleting(false);

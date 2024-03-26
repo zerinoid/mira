@@ -30,7 +30,7 @@ const Login: FC = () => {
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(true);
 
   useEffect(() => {
-    getAccount();
+    void getAccount();
   }, []);
 
   const getAccount = async () => {

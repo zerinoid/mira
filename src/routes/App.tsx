@@ -22,8 +22,8 @@ function App() {
   const [nextProjectNumber, setNextProjectNumber] = useState<number>(0);
 
   useEffect(() => {
-    getProjects();
-    getAccount();
+    void getProjects();
+    void getAccount();
   }, []);
 
   useEffect(() => {
