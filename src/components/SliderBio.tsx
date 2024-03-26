@@ -53,11 +53,11 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
   const getBio = async (): Promise<Bio> => {
     try {
       const response = await databases.getDocument(
-        import.meta.env.VITE_DATABASE_ID,
-        import.meta.env.VITE_COLLECTION_ID_BIO,
-        import.meta.env.VITE_DOCUMENT_ID_BIO
+        import.meta.env.VITE_DATABASE_ID as string,
+        import.meta.env.VITE_COLLECTION_ID_BIO as string,
+        import.meta.env.VITE_DOCUMENT_ID_BIO as string,
       );
-      setBioText(response.bio);
+      setBioText(response.bio as string);
 
       return response as Models.Document & Bio;
     } catch (error) {
@@ -72,15 +72,15 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     try {
       setIsLoadingSubmission(true);
       const response = await databases.updateDocument(
-        import.meta.env.VITE_DATABASE_ID,
-        import.meta.env.VITE_COLLECTION_ID_BIO,
-        import.meta.env.VITE_DOCUMENT_ID_BIO,
+        import.meta.env.VITE_DATABASE_ID as string,
+        import.meta.env.VITE_COLLECTION_ID_BIO as string,
+        import.meta.env.VITE_DOCUMENT_ID_BIO as string,
         {
           bio: values.bio,
-        }
+        },
       );
 
-      setBioText(response.bio);
+      setBioText(response.bio as string);
       setIsEditingBio(false);
       setIsLoadingSubmission(false);
     } catch (error) {

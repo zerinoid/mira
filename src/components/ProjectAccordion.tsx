@@ -74,7 +74,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
 
   const getImage = async () => {
     const result = storage.getFileView(
-      import.meta.env.VITE_IMAGE_BUCKET,
+      import.meta.env.VITE_IMAGE_BUCKET as string,
       project.image_path
     );
 
@@ -91,8 +91,8 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
 
       if (deleteImageRes) {
         await databases.deleteDocument(
-          import.meta.env.VITE_DATABASE_ID,
-          import.meta.env.VITE_COLLECTION_ID_PROJECTS,
+          import.meta.env.VITE_DATABASE_ID as string,
+          import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
           project.$id
         );
         getProjects();
@@ -105,7 +105,10 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
 
   const deleteImage = async (fileId: string): Promise<boolean> => {
     try {
-      await storage.deleteFile(import.meta.env.VITE_IMAGE_BUCKET, fileId);
+      await storage.deleteFile(
+        import.meta.env.VITE_IMAGE_BUCKET as string,
+        fileId
+      );
       return true;
     } catch (error) {
       console.error("Erro ao deletar a imagem:", error);

@@ -74,7 +74,7 @@ const NewProject: FC<Props> = ({
     try {
       if (file) {
         return await storage.createFile(
-          import.meta.env.VITE_IMAGE_BUCKET,
+          import.meta.env.VITE_IMAGE_BUCKET as string,
           ID.unique(),
           file
         );
@@ -103,8 +103,8 @@ const NewProject: FC<Props> = ({
       };
 
       await databases.createDocument(
-        import.meta.env.VITE_DATABASE_ID,
-        import.meta.env.VITE_COLLECTION_ID_PROJECTS,
+        import.meta.env.VITE_DATABASE_ID as string,
+        import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
         ID.unique(),
         project
       );
