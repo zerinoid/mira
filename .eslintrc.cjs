@@ -1,10 +1,17 @@
 module.exports = {
   root: true,
   env: { browser: true, es2020: true },
+  settings: {
+    react: {
+      version: 'detect'
+    }
+  },
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended-type-checked',
-    'plugin:react-hooks/recommended'
+    'plugin:react-hooks/recommended',
+    'plugin:react/recommended',
+    'plugin:react/jsx-runtime'
   ],
   ignorePatterns: ['dist', '.eslintrc.cjs'],
   parser: '@typescript-eslint/parser',
@@ -22,6 +29,7 @@ module.exports = {
     ],
     'react-hooks/exhaustive-deps': 'off',
     'react-refresh/only-export-components': 'off',
+    'react/prop-types': 'off',
     '@typescript-eslint/no-misused-promises': [
       'error',
       {
