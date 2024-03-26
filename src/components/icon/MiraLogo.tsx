@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 type Props = {
-  invert: boolean;
+  invert?: boolean;
 };
 
 const MiraLogo: FC<Props> = ({ invert }) => {
