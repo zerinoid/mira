@@ -51,7 +51,7 @@ export const projectSchema = z.object({
     .string({
       required_error: 'Campo obrigatório'
     })
-    .min(5, { message: 'Deve ter mais de 5 caracteres' })
+    .min(3, { message: 'Deve ter mais de 5 caracteres' })
     .max(30)
     .trim(),
   title: z.string().min(1, { message: 'Título é obrigatório' }).max(50).trim(),
@@ -61,7 +61,7 @@ export const projectSchema = z.object({
     .string({
       required_error: 'Campo obrigatório'
     })
-    .min(10, { message: 'Deve ter mais de 10 caracteres' })
+    .min(5, { message: 'Deve ter mais de 5 caracteres' })
     .max(1000)
     .trim(),
   date: z
@@ -75,7 +75,7 @@ export const projectSchema = z.object({
     .string({
       required_error: 'Campo obrigatório'
     })
-    .min(5, { message: 'Deve ter mais de 5 caracteres' })
+    .min(3, { message: 'Deve ter mais de 5 caracteres' })
     .max(50)
     .trim(),
   user_id: z
@@ -83,7 +83,7 @@ export const projectSchema = z.object({
       required_error: 'Campo obrigatório'
     })
     .min(6, { message: 'Deve ter mais de 6 caracteres' })
-    .max(50),
+    .max(100),
   image_path: z.string().optional(),
   file: imageSchema.optional()
 })
