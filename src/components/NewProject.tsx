@@ -204,7 +204,13 @@ const NewProject: FC<Props> = ({
               <FormItem>
                 <FormLabel>Título</FormLabel>
                 <FormControl>
-                  <Input type="text" {...field} />
+                  <RichText
+                    oneLine
+                    className="max-h-[37.5px]"
+                    {...field}
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>

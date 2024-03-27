@@ -57,7 +57,7 @@ export const projectSchema = z.object({
     .min(3, { message: 'Deve ter mais de 5 caracteres' })
     .max(30)
     .trim(),
-  title: z.string().min(1, { message: 'Título é obrigatório' }).max(50).trim(),
+  title: z.string().min(1, { message: 'Título é obrigatório' }).max(200).trim(),
   details: z.string().min(0).max(100).trim().optional(),
   additional: z.string().min(0).max(50).trim().optional(),
   body: z

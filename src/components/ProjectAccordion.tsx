@@ -63,12 +63,14 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
   const bodyRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
+  const titleRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
 
   useEffect(() => {
     getImage()
   })
 
   useLayoutEffect(() => {
+    if (titleRef && titleRef.current) titleRef.current.innerHTML = project.title
     if (bodyRef && bodyRef.current) bodyRef.current.innerHTML = project.body
   })
 
@@ -155,9 +157,8 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
       <div
         className="[grid-area:title] accordionTitleBar md:mb-4"
         onClick={opener}
-      >
-        {project.title}
-      </div>
+        ref={titleRef}
+      />
       <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
         {project.client}
       </div>
