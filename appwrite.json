@@ -116,7 +116,7 @@
                     "default": null
                 },
                 {
-                    "key": "image_path",
+                    "key": "image_id",
                     "type": "string",
                     "status": "available",
                     "error": "",

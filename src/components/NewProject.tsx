@@ -48,7 +48,7 @@ const NewProject: FC<Props> = ({
       date: '',
       client: '',
       user_id: userId,
-      image_path: '',
+      image_id: '',
       file: undefined
     }
   })
@@ -97,7 +97,7 @@ const NewProject: FC<Props> = ({
       delete values.file
       const project = {
         ...values,
-        image_path: imageResponse.$id,
+        image_id: imageResponse.$id,
         body: DOMPurify.sanitize(values.body)
       }
 

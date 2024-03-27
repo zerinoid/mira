@@ -84,6 +84,6 @@ export const projectSchema = z.object({
     })
     .min(6, { message: 'Deve ter mais de 6 caracteres' })
     .max(100),
-  image_path: z.string().optional(),
+  image_id: z.string().optional(),
   file: imageSchema.optional()
 })

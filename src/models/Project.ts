@@ -9,5 +9,5 @@ export default interface IProject extends IAppwrite {
   body: string
   date: string
   client: string
-  image_path: string
+  image_id: string
 }
