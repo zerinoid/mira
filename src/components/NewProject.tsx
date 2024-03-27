@@ -98,7 +98,8 @@ const NewProject: FC<Props> = ({
       const project = {
         ...values,
         image_id: imageResponse.$id,
-        body: DOMPurify.sanitize(values.body)
+        body: DOMPurify.sanitize(values.body),
+        title: DOMPurify.sanitize(values.title)
       }
 
       await databases.createDocument(

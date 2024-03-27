@@ -23,6 +23,7 @@ import { Models } from 'appwrite'
 import MiraLogo from './icon/MiraLogo'
 import { bioSchema } from '@/lib/validation/bio'
 import RichText from './RitchText'
+import DOMPurify from 'dompurify'
 
 type Props = {
   userId: string | undefined
@@ -88,7 +89,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
         import.meta.env.VITE_COLLECTION_ID_BIO as string,
         import.meta.env.VITE_DOCUMENT_ID_BIO as string,
         {
-          bio: values.bio
+          bio: DOMPurify.sanitize(values.bio)
         }
       )
 
