@@ -1,6 +1,12 @@
 import { databases } from '@/lib/appwrite_client'
-import { Dispatch, FC, SetStateAction, useState } from 'react'
-import { Textarea } from './ui/textarea'
+import {
+  Dispatch,
+  FC,
+  SetStateAction,
+  useLayoutEffect,
+  useRef,
+  useState
+} from 'react'
 import { z } from 'zod'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -16,6 +22,7 @@ import { Button } from './ui/button'
 import { Models } from 'appwrite'
 import MiraLogo from './icon/MiraLogo'
 import { bioSchema } from '@/lib/validation/bio'
+import RichText from './RitchText'
 
 type Props = {
   userId: string | undefined
@@ -43,6 +50,12 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
   const [bioText, setBioText] = useState<string>('')
   const [isEditingBio, setIsEditingBio] = useState<boolean>(false)
   const [isLoadingSubmission, setIsLoadingSubmission] = useState<boolean>(false)
+
+  const bioRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
+
+  useLayoutEffect(() => {
+    if (bioRef && bioRef.current) bioRef.current.innerHTML = bioText
+  })
 
   const form = useForm<z.infer<typeof bioSchema>>({
     resolver: zodResolver(bioSchema),
@@ -121,14 +134,12 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
                 control={form.control}
                 name="bio"
                 render={({ field }) => (
-                  <FormItem className="mb-8">
-                    {/* <FormLabel>Bio</FormLabel> */}
+                  <FormItem className="mb-4">
                     <FormControl>
-                      <Textarea
-                        wrap="hard"
+                      <RichText
                         className="w-full"
-                        rows={15}
-                        {...field}
+                        value={field.value}
+                        onChange={field.onChange}
                       />
                     </FormControl>
                     <FormMessage />
@@ -155,8 +166,9 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
             </form>
           </Form>
         ) : (
-          <div className="flex flex-col mb-12">
-            <p className="mb-6 whitespace-pre-line">{bioText}</p>
+          <div className="flex flex-col">
+            <div ref={bioRef} />
+
             {userId ? (
               <Button
                 variant="outline"
@@ -168,8 +180,9 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
             ) : null}
           </div>
         )}
-        <p>Para saber mais favor entrar em contato</p>
-        <a href="mailto:deborah@mira.etc.br">deborah@mira.etc.br</a>
+        <div className="mt-6">
+          <a href="mailto:deborah@mira.etc.br">deborah@mira.etc.br</a>
+        </div>
       </div>
       <div className="CLOSE" onClick={onCloseSlider}></div>
     </aside>
