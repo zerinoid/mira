@@ -2,11 +2,16 @@ import { z } from 'zod'
 
 const MB_BYTES = 1000000 // 1 megabyte
 const ACCEPTED_MIME_TYPES = [
+  'image/webp',
   'image/gif',
   'image/jpeg',
   'image/png',
   'image/jpg'
 ]
+
+const formatedTypes = ACCEPTED_MIME_TYPES.map(format =>
+  format.replace('image/', '')
+)
 
 const imageSchema = z.instanceof(FileList).superRefine((f, ctx) => {
   const file = f[0]
@@ -22,9 +27,7 @@ const imageSchema = z.instanceof(FileList).superRefine((f, ctx) => {
   if (!ACCEPTED_MIME_TYPES.includes(file?.type)) {
     ctx.addIssue({
       code: z.ZodIssueCode.custom,
-      message: `Formatos aceitos: [${ACCEPTED_MIME_TYPES.join(', ')}] mas é ${
-        file?.type
-      }`
+      message: `Formatos aceitos: ${formatedTypes.join(', ')}`
     })
   }
   // check file size
