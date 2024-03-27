@@ -1,16 +1,17 @@
+import { cn } from '@/lib/utils'
 import { FC } from 'react'
 
 type Props = {
   size?: number
 }
 
-const Spinner: FC<Props> = ({ size = 22 }) => {
+const Spinner: FC<Props> = ({ size = 6 }) => {
   return (
     <svg
-      width={`${size}px`}
-      height={`${size}px`}
       aria-hidden="true"
-      className={`text-gray-100 animate-spin dark:text-gray-600 fill-secondary`}
+      className={cn(
+        `text-gray-100 animate-spin dark:text-gray-600 fill-secondary w-${size} h-${size}`
+      )}
       viewBox="0 0 100 101"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

@@ -153,7 +153,7 @@ function App() {
       {/* Loading Projects --------------------- */}
       {isLoadingProjects ? (
         <section className="flex flex-col justify-center items-center min-h-[200px]">
-          <Spinner size={40} />
+          <Spinner size={11} />
         </section>
       ) : projectsError || !projects?.length ? (
         <section className="flex flex-col justify-center items-center min-h-[100px]">
