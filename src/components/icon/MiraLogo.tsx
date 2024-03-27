@@ -1,20 +1,18 @@
+import { cn } from '@/lib/utils'
 import { FC } from 'react'
 
 type Props = {
-  invert?: boolean
+  className?: string
 }
 
-const MiraLogo: FC<Props> = ({ invert }) => {
-  let color = 'fill-foreground'
-  if (invert) color = 'fill-background'
-
+const MiraLogo: FC<Props> = ({ className = 'fill-foreground' }) => {
   return (
     <svg
       id="Layer_1"
       data-name="Layer 1"
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 150.31 393.48"
-      className={color}
+      className={cn(className)}
     >
       <path
         fill="currentFill"
