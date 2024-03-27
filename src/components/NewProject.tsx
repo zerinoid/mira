@@ -219,7 +219,11 @@ const NewProject: FC<Props> = ({
               <FormItem>
                 <FormLabel>Corpo</FormLabel>
                 <FormControl>
-                  <RichText value={field.value} onChange={field.onChange} />
+                  <RichText
+                    value={field.value}
+                    onChange={field.onChange}
+                    className="min-h-[150px]"
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
