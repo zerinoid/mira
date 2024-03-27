@@ -169,7 +169,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
           </div>
         )}
         <p>Para saber mais favor entrar em contato</p>
-        <a href="mailto:mira@mira.etc.br">mira@mira.etc.br</a>
+        <a href="mailto:deborah@mira.etc.br">deborah@mira.etc.br</a>
       </div>
       <div className="CLOSE" onClick={onCloseSlider}></div>
     </aside>
