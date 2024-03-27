@@ -75,7 +75,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const getImage = () => {
     const result = storage.getFileView(
       import.meta.env.VITE_IMAGE_BUCKET as string,
-      project.image_id
+      project.image_id as string
     )
 
     setImagePath(result.href)
@@ -87,7 +87,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
     try {
       setIsDeleting(true)
 
-      const deleteImageRes = await deleteImage(project.image_id)
+      const deleteImageRes = await deleteImage(project.image_id as string)
 
       if (deleteImageRes) {
         await databases.deleteDocument(
