@@ -111,11 +111,11 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? 'grid' : 'hidden'
-      } z-10 font-sans absolute left-0 text-background min-h-screen grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full slider-bio`}
+      } z-10 font-sans absolute left-0 text-background min-h-screen grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full slider-bio overflow-y-hidden`}
     >
       <div className="PADDING" />
       <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
-      <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7 border-r-2 border-background space-y-6">
+      <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7 border-r-2 border-background space-y-6 overflow-y-scroll md:overflow-y-auto">
         <header
           className="flex justify-between items-start cursor-pointer"
           onClick={onCloseSlider}
