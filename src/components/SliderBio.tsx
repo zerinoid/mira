@@ -115,9 +115,9 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     >
       <div className="PADDING" />
       <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
-      <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7 border-r-4 border-background">
+      <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7 border-r-2 border-background space-y-6">
         <header
-          className="flex justify-between items-start mb-8 cursor-pointer"
+          className="flex justify-between items-start cursor-pointer"
           onClick={onCloseSlider}
         >
           <div className="w-[20px]">
@@ -181,7 +181,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
             ) : null}
           </div>
         )}
-        <div className="mt-6">
+        <div className="pb-10">
           <a href="mailto:deborah@mira.etc.br">deborah@mira.etc.br</a>
         </div>
       </div>
