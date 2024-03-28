@@ -19,5 +19,5 @@
 }
 
 .envelope {
-  min-height: calc(100vh + var(--headerHeight) - 4rem)
+  min-height: calc(100vh + var(--headerHeight) - 3rem - 1px)
 }
