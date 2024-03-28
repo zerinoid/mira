@@ -82,7 +82,7 @@ const Projects: FC<Props> = ({
 
   return (
     <>
-      <main className="text-foreground bg-background min-h-screen">
+      <main className="text-foreground bg-background">
         {/* New Project form --------------------- */}
         {user?.$id && isNewProjectOpen ? (
           <section className="p-2 border-t border-foreground">

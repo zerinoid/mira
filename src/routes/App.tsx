@@ -18,7 +18,7 @@ function App() {
         setIsBioOpen={setIsBioOpen}
         setIsNewProjectOpen={setIsNewProjectOpen}
       />
-      <div className="relative container">
+      <div className="relative container envelope">
         <SliderBio
           userId={user?.$id}
           setIsOpen={setIsBioOpen}

@@ -33,6 +33,8 @@
     --ring: 358, 81%, 65%;
     --radius: 0.5rem;
 
+    --headerHeight: -109.7px;
+
     @apply font-serif;
     font-size: 15px;
     line-height: 1.5;
@@ -44,6 +46,10 @@
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    @media screen(md) {
+      --headerHeight: -113.4px;
+    }
   }
 
   .dark {
@@ -75,6 +81,7 @@
     --input: 217.2 32.6% 17.5%;
     --ring: 212.7 26.8% 83.9%;
   }
+
 }
 
 @layer base {

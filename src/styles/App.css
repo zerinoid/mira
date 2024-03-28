@@ -17,3 +17,7 @@
     "number category project client date";
   }
 }
+
+.envelope {
+  min-height: calc(100vh + var(--headerHeight) - 4rem)
+}
