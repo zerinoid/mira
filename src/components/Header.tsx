@@ -2,11 +2,11 @@ import { Dispatch, FC, SetStateAction } from 'react'
 import { Button } from '@/components/ui/button'
 import MiraLogo from '@/components/icon/MiraLogo'
 import { account } from '@/lib/appwrite_client'
-import { Models } from 'appwrite'
+import UserType from '@/models/User'
 
 type Props = {
-  setUser: Dispatch<SetStateAction<Models.User<Models.Preferences>>>
-  user: Models.User<Models.Preferences>
+  setUser: Dispatch<SetStateAction<UserType>>
+  user: UserType
   setIsBioOpen: Dispatch<SetStateAction<boolean>>
   setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>
 }
@@ -20,7 +20,7 @@ const Header: FC<Props> = ({
   const logout = async () => {
     try {
       await account.deleteSession('current')
-      setUser({} as Models.User<Models.Preferences>)
+      setUser({} as UserType)
     } catch (error) {
       console.error('Erro ao deslogar usuário: ', error)
     }

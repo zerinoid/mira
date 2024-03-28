@@ -3,13 +3,13 @@ import '../styles/App.css'
 import ProjectAccordion from '../components/ProjectAccordion'
 import { account, databases } from '../lib/appwrite_client'
 import IProject from '../models/Project'
-import { Models } from 'appwrite'
 import NewProject from '@/components/NewProject'
 import Spinner from '@/components/animation/Spinner'
+import UserType from '@/models/User'
 
 type Props = {
-  setUser: Dispatch<SetStateAction<Models.User<Models.Preferences>>>
-  user: Models.User<Models.Preferences>
+  setUser: Dispatch<SetStateAction<UserType>>
+  user: UserType
   setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>
   isNewProjectOpen: boolean
 }
@@ -35,7 +35,7 @@ const Projects: FC<Props> = ({
       const accountDetails = await account.get()
       setUser(accountDetails)
     } catch (error) {
-      setUser({} as Models.User<Models.Preferences>)
+      setUser({} as UserType)
     }
   }
 
