@@ -1,0 +1,9 @@
+.slider-bio {
+  --heightOffset: -109.7px;
+  top: var(--heightOffset);
+  height: calc(100% - var(--heightOffset));
+
+  @media screen(md) {
+    --heightOffset: -113.4px;
+  }
+}

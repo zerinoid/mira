@@ -29,41 +29,45 @@ const Header: FC<Props> = ({
   const handleSliderBio = () => setIsBioOpen(prevState => !prevState)
 
   return (
-    <header className="header px-[5px] pt-3 md:pt-4">
-      <div
-        className="[grid-area:title] cursor-pointer"
-        onClick={handleSliderBio}
-      >
-        <div className="w-[20px]">
-          <MiraLogo />
+    <header>
+      <div className="header px-[5px] pt-3 md:pt-4 container">
+        <div
+          className="[grid-area:title] cursor-pointer"
+          onClick={handleSliderBio}
+        >
+          <div className="w-[20px]">
+            <MiraLogo />
+          </div>
         </div>
-      </div>
 
-      <div className="[grid-area:user] flex justify-end w-full">
-        {user?.$id ? (
-          <>
-            <p className="mr-5 mt-2 hidden lg:block">Bem vinda, {user?.name}</p>
-            <Button
-              className="py-1 px-2 h-7 md:py-2 md:px-4 md:h-10 mr-2"
-              onClick={() => setIsNewProjectOpen(prevState => !prevState)}
-            >
-              Novo Projeto
-            </Button>
-            <Button
-              variant="outline"
-              className="border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
-              onClick={logout}
-            >
-              Logout
-            </Button>
-          </>
-        ) : null}
+        <div className="[grid-area:user] flex justify-end w-full">
+          {user?.$id ? (
+            <>
+              <p className="mr-5 mt-2 hidden lg:block">
+                Bem vinda, {user?.name}
+              </p>
+              <Button
+                className="py-1 px-2 h-7 md:py-2 md:px-4 md:h-10 mr-2"
+                onClick={() => setIsNewProjectOpen(prevState => !prevState)}
+              >
+                Novo Projeto
+              </Button>
+              <Button
+                variant="outline"
+                className="border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
+                onClick={logout}
+              >
+                Logout
+              </Button>
+            </>
+          ) : null}
+        </div>
+        <div className="[grid-area:number]">#</div>
+        <div className="[grid-area:category] hidden lg:block">Tipo</div>
+        <div className="[grid-area:project]">Projeto</div>
+        <div className="[grid-area:client] hidden lg:block">Cliente</div>
+        <div className="[grid-area:date] justify-self-end">Ano</div>
       </div>
-      <div className="[grid-area:number]">#</div>
-      <div className="[grid-area:category] hidden lg:block">Tipo</div>
-      <div className="[grid-area:project]">Projeto</div>
-      <div className="[grid-area:client] hidden lg:block">Cliente</div>
-      <div className="[grid-area:date] justify-self-end">Ano</div>
     </header>
   )
 }
