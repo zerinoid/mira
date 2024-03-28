@@ -111,7 +111,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
     <aside
       className={`${
         isOpen ? 'grid' : 'hidden'
-      } z-10 font-sans absolute top-0 left-0 text-background min-h-screen grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full`}
+      } h-full z-10 font-sans absolute top-0 left-0 text-background min-h-screen grid-cols-[5px_5fr_35fr_13fr] md:grid-cols-[5px_5fr_28fr_20fr] lg:grid-cols-[5px_3fr_20fr_43fr] bg-gradient-to-r from-foreground to-transparent to-30% w-full`}
     >
       <div className="PADDING" />
       <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
