@@ -1,4 +1,4 @@
 .slider-bio {
   top: calc(-1 * var(--headerHeight));
-  height: calc(100% + var(--headerHeight));
+  height: calc(100% + var(--headerHeight) + 45px);
 }
