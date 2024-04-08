@@ -27,5 +27,5 @@
 /* screen subtracted by the heights from header, footer and footer's top border */
 
 .envelope {
-  min-height: calc(100vh - var(--headerHeight) - 3rem - 1px)
+  min-height: calc(100vh - var(--headerHeight) - 3rem)
 }
