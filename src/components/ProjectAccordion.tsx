@@ -77,7 +77,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
   const getImage = () => {
     const result = storage.getFileView(
       import.meta.env.VITE_IMAGE_BUCKET as string,
-      project.image_id as string
+      project.image_id
     )
 
     setImagePath(result.href)
@@ -89,7 +89,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
     try {
       setIsDeleting(true)
 
-      const deleteImageRes = await deleteImage(project.image_id as string)
+      const deleteImageRes = await deleteImage(project.image_id)
 
       if (deleteImageRes) {
         await databases.deleteDocument(
@@ -148,9 +148,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
         </>
       )}
 
-      <div className="[grid-area:number] accordionTitleBar" onClick={opener}>
-        {project.number}
-      </div>
+      <div className="[grid-area:empty] accordionTitleBar" onClick={opener} />
       <div className="[grid-area:category] accordionTitleBar" onClick={opener}>
         {project.category}
       </div>

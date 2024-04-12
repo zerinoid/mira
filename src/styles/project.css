@@ -2,6 +2,32 @@
   display: grid;
   grid-template-columns: 5fr 40fr 8fr;
   grid-template-areas:
+    "empty title date"
+    "empty client date"
+    "empty category date"
+    "empty divider date"
+    ". details ."
+    ". additional ."
+    ". body ."
+    ". image ."
+    ". buttons .";
+  justify-items: start;
+  text-align: start;
+  padding-bottom: 20px;
+
+  @media screen(lg) {
+    grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
+    grid-template-areas:
+      "empty category title client date"
+      ". details body image ."
+      ". additional body image buttons";
+  }
+}
+
+.new-project {
+  display: grid;
+  grid-template-columns: 5fr 40fr 8fr;
+  grid-template-areas:
     "number title date"
     "number client date"
     "number category date"

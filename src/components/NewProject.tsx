@@ -128,7 +128,7 @@ const NewProject: FC<Props> = ({
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="project gap-y-2 lg:gap-y-0"
+        className="new-project gap-y-2 lg:gap-y-0"
       >
         <div className="[grid-area:number] pr-2">
           <FormField
