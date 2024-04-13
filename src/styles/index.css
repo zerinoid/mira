@@ -33,7 +33,7 @@
     --ring: 358, 81%, 65%;
     --radius: 0.5rem;
 
-    --headerHeight: 109.7px;
+    --headerHeight: 85.7px;
 
     @apply font-serif;
     font-size: 15px;
@@ -48,7 +48,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     @media screen(md) {
-      --headerHeight: 113.4px;
+      --headerHeight: 89.4px;
     }
   }
 

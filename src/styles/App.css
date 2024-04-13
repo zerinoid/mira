@@ -7,7 +7,6 @@
   grid-template-areas:
     ". title user";
   justify-items: start;
-  row-gap: 1.6rem;
 
   @media screen(lg) {
     grid-template-columns: 3fr 10fr 25fr 20fr 8fr;

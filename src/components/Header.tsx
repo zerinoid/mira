@@ -30,7 +30,7 @@ const Header: FC<Props> = ({
 
   return (
     <header>
-      <div className="header px-[5px] pt-3 md:pt-4 container">
+      <div className="header px-[5px] pt-3 pb-6 md:pt-4 container">
         <div
           className="[grid-area:title] cursor-pointer"
           onClick={handleSliderBio}
