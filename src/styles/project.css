@@ -16,11 +16,11 @@
   padding-bottom: 20px;
 
   @media screen(lg) {
-    grid-template-columns: 8fr 10fr 25fr 20fr 3fr;
+    grid-template-columns: 4fr 25fr 20fr 10fr 7fr;
     grid-template-areas:
-      "date category title client empty"
-      ". details body image ."
-      ". additional body image buttons";
+      "date title client category empty"
+      ". body image details ."
+      ". body image additional buttons";
   }
 }
 

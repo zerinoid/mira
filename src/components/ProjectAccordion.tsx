@@ -133,7 +133,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
             {project.additional}
           </div>
           <div className="[grid-area:body] mb-6 lg:pr-2" ref={bodyRef} />
-          <div className="[grid-area:image] mb-6 lg:mb-0">
+          <div className="[grid-area:image] mb-6 lg:mb-0 lg:pr-2">
             <img alt={project.title} src={imagePath} />
           </div>
           {userId ? (
