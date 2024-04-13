@@ -62,11 +62,6 @@ const Header: FC<Props> = ({
             </>
           ) : null}
         </div>
-        <div className="[grid-area:number]">#</div>
-        <div className="[grid-area:category] hidden lg:block">Tipo</div>
-        <div className="[grid-area:project]">Projeto</div>
-        <div className="[grid-area:client] hidden lg:block">Cliente</div>
-        <div className="[grid-area:date] justify-self-end">Ano</div>
       </div>
     </header>
   )

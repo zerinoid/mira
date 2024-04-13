@@ -5,8 +5,7 @@
   display: grid;
   grid-template-columns: 5fr 20fr 28fr;
   grid-template-areas:
-    ". title user"
-    "number project date";
+    ". title user";
   justify-items: start;
   row-gap: 1.6rem;
 
