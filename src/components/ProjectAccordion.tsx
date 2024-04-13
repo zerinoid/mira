@@ -148,7 +148,12 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
         </>
       )}
 
-      <div className="[grid-area:empty] accordionTitleBar" onClick={opener} />
+      <div
+        className="[grid-area:empty] accordionTitleBar justify-self-end text-end"
+        onClick={opener}
+      >
+        {userId ? project.number : null}
+      </div>
       <div className="[grid-area:category] accordionTitleBar" onClick={opener}>
         {project.category}
       </div>
@@ -160,10 +165,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
       <div className="[grid-area:client] accordionTitleBar" onClick={opener}>
         {project.client}
       </div>
-      <div
-        className="[grid-area:date] accordionTitleBar justify-self-end text-end"
-        onClick={opener}
-      >
+      <div className="[grid-area:date] accordionTitleBar" onClick={opener}>
         {project.date}
       </div>
     </div>

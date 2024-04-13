@@ -1,11 +1,11 @@
 .project {
   display: grid;
-  grid-template-columns: 5fr 40fr 8fr;
+  grid-template-columns: 8fr 40fr 5fr;
   grid-template-areas:
-    "empty title date"
-    "empty client date"
-    "empty category date"
-    "empty divider date"
+    "date title empty"
+    "date client empty"
+    "date category empty"
+    "date divider empty"
     ". details ."
     ". additional ."
     ". body ."
@@ -16,9 +16,9 @@
   padding-bottom: 20px;
 
   @media screen(lg) {
-    grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
+    grid-template-columns: 8fr 10fr 25fr 20fr 3fr;
     grid-template-areas:
-      "empty category title client date"
+      "date category title client empty"
       ". details body image ."
       ". additional body image buttons";
   }
