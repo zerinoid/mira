@@ -3,15 +3,14 @@
 
 .header {
   display: grid;
-  grid-template-columns: 5fr 20fr 28fr;
+  grid-template-columns: 8fr 16fr 28fr;
   grid-template-areas:
     ". title user";
   justify-items: start;
 
   @media screen(lg) {
-    grid-template-columns: 3fr 10fr 25fr 20fr 8fr;
+    grid-template-columns: 4fr 25fr 20fr 10fr 7fr;
     grid-template-areas:
       "logo title . user user"
-    "number category project client date";
   }
 }

@@ -1,4 +1,9 @@
 .slider-bio {
   top: calc(-1 * var(--headerHeight));
   height: calc(100% + var(--headerHeight) + 45px);
+  grid-template-columns: 5px 8fr 43fr 2fr;
+
+  @media screen(lg) {
+    grid-template-columns: 5px 4fr 20fr 42fr;
+  }
 }
