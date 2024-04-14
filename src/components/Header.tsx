@@ -1,4 +1,4 @@
-import { Dispatch, FC, SetStateAction } from 'react'
+import { Dispatch, FC, SetStateAction, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import MiraLogo from '@/components/icon/MiraLogo'
 import { account } from '@/lib/appwrite_client'
@@ -17,11 +17,15 @@ const Header: FC<Props> = ({
   setIsBioOpen,
   setIsNewProjectOpen
 }) => {
+  const [isLoadingLogout, setIsLoadingLogout] = useState<boolean>(false)
+
   const logout = async () => {
+    setIsLoadingLogout(true)
     try {
       await account.deleteSession('current')
       setUser({} as UserType)
     } catch (error) {
+      setIsLoadingLogout(false)
       console.error('Erro ao deslogar usuário: ', error)
     }
   }
@@ -53,8 +57,9 @@ const Header: FC<Props> = ({
                 Novo Projeto
               </Button>
               <Button
+                isLoading={isLoadingLogout}
                 variant="outline"
-                className="border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
+                className="w-20 border-2 py-1 px-2 h-7 md:py-2 md:px-4 md:h-10"
                 onClick={logout}
               >
                 Logout
