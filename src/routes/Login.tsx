@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { account } from '@/lib/appwrite_client'
 import { useNavigate } from 'react-router-dom'
+import { AppwriteException } from 'appwrite'
 
 const loginSchema = z.object({
   email: z
@@ -56,7 +57,37 @@ const Login: FC = () => {
       await account.createEmailSession(values.email, values.password)
       navigate('/')
     } catch (error) {
-      console.error('Erro no login:', error)
+      if (error instanceof AppwriteException) {
+        if (
+          error.type === 'general_argument_invalid' ||
+          error.type === 'user_invalid_credentials'
+        ) {
+          form.setError('password', {
+            type: 'manual',
+            message: 'Credenciais inválidas'
+          })
+        } else if (error.code === 429) {
+          form.setError('password', {
+            type: 'manual',
+            message: 'Limite de tentativas excedido, espere alguns minutos.'
+          })
+        } else if (error.code === 500) {
+          form.setError('password', {
+            type: 'manual',
+            message: 'Erro de conexão com o servidor'
+          })
+        } else {
+          form.setError('password', {
+            type: 'manual',
+            message: error.message
+          })
+        }
+      } else {
+        form.setError('password', {
+          type: 'manual',
+          message: 'Erro genérico, favor contactar o administrador'
+        })
+      }
       setIsLoadingLogin(false)
     }
   }
@@ -70,7 +101,7 @@ const Login: FC = () => {
           src="MIRA2024.png"
         />
       </div>
-      <div>
+      <div className="w-[194.5px]">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
