@@ -124,7 +124,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
       } z-10 font-sans absolute left-0 text-background bg-foreground w-full slider-bio overflow-y-hidden`}
     >
       <div className="PADDING" />
-      <div className="bg-foreground pt-3 md:pt-4 DUMMY" />
+      <div className="DUMMY" />
       <div className="bg-foreground pt-3 md:pt-4 pr-4 md:pr-7 space-y-6 overflow-y-scroll md:overflow-y-auto">
         <header
           className="flex justify-between items-start cursor-pointer"
@@ -133,7 +133,7 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
           <div className="w-[20px]">
             <MiraLogo className="fill-background" />
           </div>
-          <CloseIcon />
+          {/* <CloseIcon /> */}
         </header>
         {isEditingBio ? (
           <Form {...form}>
