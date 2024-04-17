@@ -27,6 +27,12 @@ type DeleteProps = {
   isDeleting: boolean
 }
 
+type ReadonlyProjectProps = {
+  project: IProject
+  userId?: string
+  getProjects: () => Promise<void>
+}
+
 const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
   return (
     <AlertDialog>
@@ -57,7 +63,11 @@ const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
   )
 }
 
-const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
+const ReadonlyProject: FC<ReadonlyProjectProps> = ({
+  project,
+  userId,
+  getProjects
+}) => {
   const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
@@ -117,9 +127,8 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
       return false
     }
   }
-
   return (
-    <div className="project border-t border-foreground px-[5px]">
+    <>
       {isProjectOpen && (
         <>
           <div
@@ -138,7 +147,7 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
           </div>
           {userId ? (
             <div className="[grid-area:buttons] space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
-              <Button className="w-28 bg-muted hover:bg-muted cursor-not-allowed">
+              <Button className="w-28">
                 <PencilSquare />
                 Editar
               </Button>
@@ -168,6 +177,24 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
       <div className="[grid-area:date] accordionTitleBar" onClick={opener}>
         {project.date}
       </div>
+    </>
+  )
+}
+
+const EditingProject = () => {
+  return <p>editing...</p>
+}
+
+const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
+  const [isEditingProject, setIsEditingProject] = useState<boolean>(false)
+
+  return (
+    <div className="project border-t border-foreground px-[5px]">
+      <ReadonlyProject
+        project={project}
+        userId={userId}
+        getProject={getProjects}
+      />
     </div>
   )
 }
