@@ -9,8 +9,8 @@
   justify-items: start;
 
   @media screen(lg) {
-    grid-template-columns: 4fr 25fr 20fr 10fr 7fr;
+    grid-template-columns: 4fr 25fr 10fr 20fr 7fr;
     grid-template-areas:
-      "logo title . user user"
+      ". title . user user"
   }
 }
