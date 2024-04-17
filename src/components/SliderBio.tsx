@@ -19,7 +19,7 @@ import {
   FormMessage
 } from '@/components/ui/form'
 import { Button } from './ui/button'
-import { Models } from 'appwrite'
+import { AppwriteException, Models } from 'appwrite'
 import MiraLogo from './icon/MiraLogo'
 import { bioSchema } from '@/lib/validation/bio'
 import RichText from './RitchText'
@@ -97,8 +97,18 @@ const SliderBio: FC<Props> = ({ userId, isOpen, setIsOpen }) => {
       setIsEditingBio(false)
       setIsLoadingSubmission(false)
     } catch (error) {
+      if (error instanceof AppwriteException) {
+        form.setError('bio', {
+          type: 'manual',
+          message: error.message
+        })
+      } else {
+        form.setError('bio', {
+          type: 'manual',
+          message: 'Erro genérico, favor contactar o administrador'
+        })
+      }
       setIsLoadingSubmission(false)
-      console.error('Error ao editar bio: ', error)
     }
   }
 

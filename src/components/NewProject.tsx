@@ -13,7 +13,7 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
 import { databases, storage } from '@/lib/appwrite_client'
-import { ID } from 'appwrite'
+import { AppwriteException, ID } from 'appwrite'
 import { projectSchema } from '@/lib/validation/project'
 import { z } from 'zod'
 import RichText from './RitchText'
@@ -35,6 +35,7 @@ const NewProject: FC<Props> = ({
   const [file, setFile] = useState<File | undefined>()
   const [isLoadingNewProject, setIsLoadingNewProject] = useState<boolean>(false)
   const [filePreview, setFilePreview] = useState<string | ArrayBuffer | null>()
+  const [submitError, setSubmitError] = useState<string>('')
 
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
@@ -88,6 +89,7 @@ const NewProject: FC<Props> = ({
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
     try {
       setIsLoadingNewProject(true)
+      setSubmitError('')
       const imageResponse = await uploadImage()
 
       if (typeof imageResponse === 'undefined') {
@@ -114,8 +116,12 @@ const NewProject: FC<Props> = ({
       setIsLoadingNewProject(false)
       setIsNewProjectOpen(false)
     } catch (error) {
+      if (error instanceof AppwriteException) {
+        setSubmitError(error.message)
+      } else {
+        setSubmitError('Erro genérico, favor contactar o administrador')
+      }
       setIsLoadingNewProject(false)
-      console.error('Erro ao submeter projeto: ', error)
     }
   }
   /*
@@ -310,13 +316,20 @@ const NewProject: FC<Props> = ({
           )}
         />
 
-        <Button
-          isLoading={isLoadingNewProject}
-          className="[grid-area:buttons] w-full self-end"
-          type="submit"
-        >
-          Enviar
-        </Button>
+        <div className="[grid-area:buttons] flex flex-col w-full self-end justify-end">
+          {submitError && (
+            <p className="text-end text-destructive text-sm">
+              Erro: {submitError}
+            </p>
+          )}
+          <Button
+            className="w-full"
+            isLoading={isLoadingNewProject}
+            type="submit"
+          >
+            Enviar
+          </Button>
+        </div>
       </form>
     </Form>
   )
