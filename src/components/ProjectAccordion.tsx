@@ -1,4 +1,12 @@
-import { FC, useEffect, useState, useRef, useLayoutEffect } from 'react'
+import {
+  FC,
+  useEffect,
+  useState,
+  useRef,
+  useLayoutEffect,
+  Dispatch,
+  SetStateAction
+} from 'react'
 import IProject from '../models/Project'
 import { databases, storage } from '@/lib/appwrite_client'
 import { Button } from './ui/button'
@@ -15,6 +23,7 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog'
+import NewProject from './NewProject'
 
 type Props = {
   project: IProject
@@ -31,6 +40,9 @@ type ReadonlyProjectProps = {
   project: IProject
   userId?: string
   getProjects: () => Promise<void>
+  setIsEditingProject: Dispatch<SetStateAction<boolean>>
+  isProjectOpen: boolean
+  setIsProjectOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
@@ -66,9 +78,11 @@ const DeletionAlert: FC<DeleteProps> = ({ action, isDeleting }) => {
 const ReadonlyProject: FC<ReadonlyProjectProps> = ({
   project,
   userId,
-  getProjects
+  getProjects,
+  setIsEditingProject,
+  isProjectOpen,
+  setIsProjectOpen
 }) => {
-  const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false)
   const [imagePath, setImagePath] = useState<string>('')
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
 
@@ -147,7 +161,10 @@ const ReadonlyProject: FC<ReadonlyProjectProps> = ({
           </div>
           {userId ? (
             <div className="[grid-area:buttons] space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
-              <Button className="w-28">
+              <Button
+                onClick={() => setIsEditingProject(true)}
+                className="w-28"
+              >
                 <PencilSquare />
                 Editar
               </Button>
@@ -181,19 +198,23 @@ const ReadonlyProject: FC<ReadonlyProjectProps> = ({
   )
 }
 
-const EditingProject = () => {
-  return <p>editing...</p>
-}
-
 const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
+  const [isProjectOpen, setIsProjectOpen] = useState<boolean>(false)
   const [isEditingProject, setIsEditingProject] = useState<boolean>(false)
 
-  return (
+  return isEditingProject ? (
+    <div className="border-t px-[5px]">
+      <NewProject project={project} setIsEditingProject={setIsEditingProject} />
+    </div>
+  ) : (
     <div className="project border-t border-foreground px-[5px]">
       <ReadonlyProject
         project={project}
         userId={userId}
-        getProject={getProjects}
+        getProjects={getProjects}
+        setIsEditingProject={setIsEditingProject}
+        isProjectOpen={isProjectOpen}
+        setIsProjectOpen={setIsProjectOpen}
       />
     </div>
   )

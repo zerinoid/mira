@@ -18,19 +18,25 @@ import { projectSchema } from '@/lib/validation/project'
 import { z } from 'zod'
 import RichText from './RitchText'
 import DOMPurify from 'dompurify'
+import IProject from '@/models/Project'
+import { CircleX, RotateCw } from 'lucide-react'
 
 type Props = {
-  userId: string
-  getProjects: () => void
-  setIsNewProjectOpen: Dispatch<SetStateAction<boolean>>
-  nextProjectNumber: number
+  userId?: string
+  getProjects?: () => void
+  setIsNewProjectOpen?: Dispatch<SetStateAction<boolean>>
+  nextProjectNumber?: number
+  project?: IProject
+  setIsEditingProject?: Dispatch<SetStateAction<boolean>>
 }
 
 const NewProject: FC<Props> = ({
   userId,
   getProjects,
   setIsNewProjectOpen,
-  nextProjectNumber
+  nextProjectNumber,
+  project,
+  setIsEditingProject
 }) => {
   const [file, setFile] = useState<File | undefined>()
   const [isLoadingNewProject, setIsLoadingNewProject] = useState<boolean>(false)
@@ -40,16 +46,16 @@ const NewProject: FC<Props> = ({
   const form = useForm<z.infer<typeof projectSchema>>({
     resolver: zodResolver(projectSchema),
     defaultValues: {
-      number: nextProjectNumber,
-      category: '',
-      title: '',
-      details: '',
-      additional: '',
-      body: '',
-      date: '',
-      client: '',
-      user_id: userId,
-      image_id: '',
+      number: project?.number || nextProjectNumber,
+      category: project?.category || '',
+      title: project?.title || '',
+      details: project?.details || '',
+      additional: project?.additional || '',
+      body: project?.body || '',
+      date: project?.date || '',
+      client: project?.client || '',
+      user_id: project?.user_id || userId,
+      image_id: project?.image_id || '',
       file: undefined
     }
   })
@@ -112,9 +118,9 @@ const NewProject: FC<Props> = ({
       )
 
       form.reset()
-      getProjects()
+      getProjects && getProjects()
       setIsLoadingNewProject(false)
-      setIsNewProjectOpen(false)
+      setIsNewProjectOpen && setIsNewProjectOpen(false)
     } catch (error) {
       if (error instanceof AppwriteException) {
         setSubmitError(error.message)
@@ -322,13 +328,29 @@ const NewProject: FC<Props> = ({
               Erro: {submitError}
             </p>
           )}
-          <Button
-            className="w-full"
-            isLoading={isLoadingNewProject}
-            type="submit"
-          >
-            Enviar
-          </Button>
+          {setIsEditingProject ? (
+            <div className="space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
+              <Button isLoading={isLoadingNewProject} type="submit">
+                <RotateCw className="mr-1" />
+                Atualizar
+              </Button>
+              <Button
+                onClick={() => setIsEditingProject(false)}
+                variant="destructive"
+              >
+                <CircleX className="mr-1" />
+                Cancelar
+              </Button>
+            </div>
+          ) : (
+            <Button
+              className="w-full"
+              isLoading={isLoadingNewProject}
+              type="submit"
+            >
+              Enviar
+            </Button>
+          )}
         </div>
       </form>
     </Form>
