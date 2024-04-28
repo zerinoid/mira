@@ -86,6 +86,7 @@ const ReadonlyProject: FC<ReadonlyProjectProps> = ({
 }) => {
   const [imagePath, setImagePath] = useState<string>('')
   const [isDeleting, setIsDeleting] = useState<boolean>(false)
+  const [deleteError, setDeleteError] = useState<string>('')
 
   const bodyRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
   const titleRef = useRef<HTMLDivElement>(null as unknown as HTMLDivElement)
@@ -113,20 +114,25 @@ const ReadonlyProject: FC<ReadonlyProjectProps> = ({
   const deleteProject = async () => {
     try {
       setIsDeleting(true)
+      setDeleteError('')
 
       const deleteImageRes = await deleteImage(project.image_id)
 
-      if (deleteImageRes) {
+      if (deleteImageRes.success) {
         await databases.deleteDocument(
           import.meta.env.VITE_DATABASE_ID as string,
           import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
           project.$id
         )
         await getProjects()
+      } else {
+        setIsDeleting(false)
+        setDeleteError(deleteImageRes.message)
       }
     } catch (error) {
       setIsDeleting(false)
-      console.error('Erro ao deletar projeto:', error)
+      setDeleteError('Erro ao deletar projeto')
+      console.log('Erro ao deletar projeto:', error)
     }
   }
 
@@ -150,6 +156,9 @@ const ReadonlyProject: FC<ReadonlyProjectProps> = ({
           </div>
           {userId ? (
             <div className="[grid-area:buttons] space-x-2 lg:space-x-0 lg:space-y-2 w-full lg:flex flex-col lg:items-end justify-end">
+              {deleteError && (
+                <p className="text-destructive text-sm mb-0">{deleteError}</p>
+              )}
               <Button
                 onClick={() => setIsEditingProject(true)}
                 className="w-28"
