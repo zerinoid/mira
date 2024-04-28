@@ -20,10 +20,11 @@ import RichText from './RitchText'
 import DOMPurify from 'dompurify'
 import IProject from '@/models/Project'
 import { CircleX, RotateCw } from 'lucide-react'
+import deleteImage from '@/lib/deleteImage'
 
 type Props = {
   userId?: string
-  getProjects?: () => void
+  getProjects: () => void
   setIsNewProjectOpen?: Dispatch<SetStateAction<boolean>>
   nextProjectNumber?: number
   project?: IProject
@@ -93,12 +94,21 @@ const NewProject: FC<Props> = ({
   }
 
   const onSubmit = async (values: z.infer<typeof projectSchema>) => {
+    if (project) {
+      await onEditProject(values)
+    } else {
+      await onSubmitNewProject(values)
+    }
+  }
+
+  const onSubmitNewProject = async (values: z.infer<typeof projectSchema>) => {
     try {
       setIsLoadingNewProject(true)
       setSubmitError('')
       const imageResponse = await uploadImage()
 
       if (typeof imageResponse === 'undefined') {
+        setSubmitError('Upload de imagem falhou')
         throw new Error('Upload de imagem falhou')
       }
 
@@ -118,7 +128,7 @@ const NewProject: FC<Props> = ({
       )
 
       form.reset()
-      getProjects && getProjects()
+      getProjects()
       setIsLoadingNewProject(false)
       setIsNewProjectOpen && setIsNewProjectOpen(false)
     } catch (error) {
@@ -130,6 +140,48 @@ const NewProject: FC<Props> = ({
       setIsLoadingNewProject(false)
     }
   }
+
+  const onEditProject = async (values: z.infer<typeof projectSchema>) => {
+    try {
+      setIsLoadingNewProject(true)
+      setSubmitError('')
+      /* const deleteImageRes = await deleteImage(project.image_id)
+
+* if (!deleteImageRes.success) {
+*   setSubmitError(deleteImageRes.message)
+*   return
+* } */
+
+      const imageResponse = await uploadImage()
+
+      if (typeof imageResponse === 'undefined') {
+        setSubmitError('Upload de nova imagem falhou')
+        throw new Error('Upload de nova imagem falhou')
+      }
+
+      delete values.file
+      const projectUpdated = {
+        ...values,
+        image_id: imageResponse.$id,
+        body: DOMPurify.sanitize(values.body),
+        title: DOMPurify.sanitize(values.title)
+      }
+
+      await databases.updateDocument(
+        import.meta.env.VITE_DATABASE_ID as string,
+        import.meta.env.VITE_COLLECTION_ID_PROJECTS as string,
+        project!.$id,
+        projectUpdated
+      )
+      getProjects()
+      setIsEditingProject && setIsEditingProject(false)
+      setIsLoadingNewProject(false)
+    } catch (error) {
+      setIsLoadingNewProject(false)
+      console.error('erro update project:', error)
+    }
+  }
+
   /*
    *   const clearImage = () => {
    *     setFile(undefined);

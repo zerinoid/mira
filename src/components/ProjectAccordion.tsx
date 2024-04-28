@@ -202,7 +202,11 @@ const ProjectAccordion: FC<Props> = ({ project, userId, getProjects }) => {
 
   return isEditingProject ? (
     <div className="border-t px-[5px]">
-      <NewProject project={project} setIsEditingProject={setIsEditingProject} />
+      <NewProject
+        project={project}
+        setIsEditingProject={setIsEditingProject}
+        getProjects={getProjects}
+      />
     </div>
   ) : (
     <div className="project border-t border-foreground px-[5px]">
