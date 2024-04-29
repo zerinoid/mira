@@ -30,7 +30,7 @@ type Props = {
   userId?: string
   getProjects: () => void
   setIsNewProjectOpen?: Dispatch<SetStateAction<boolean>>
-  nextProjectNumber?: number
+  nextProjectNumber?: string
   project?: IProject
   setIsEditingProject?: Dispatch<SetStateAction<boolean>>
 }
@@ -124,6 +124,7 @@ const NewProject: FC<Props> = ({
       const project = {
         ...values,
         image_id: imageResponse.$id,
+        number: Number(values.number),
         body: DOMPurify.sanitize(values.body),
         title: DOMPurify.sanitize(values.title)
       }
@@ -178,6 +179,7 @@ const NewProject: FC<Props> = ({
       const projectUpdated = {
         ...values,
         image_id: imageResponse && imageResponse.$id,
+        number: Number(values.number),
         body: DOMPurify.sanitize(values.body),
         title: DOMPurify.sanitize(values.title)
       }

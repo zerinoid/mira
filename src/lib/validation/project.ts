@@ -3,7 +3,7 @@ import { imageSchema, imageSchemaOptional } from './image'
 
 export const projectSchema = z.object({
   number: z
-    .number({
+    .string({
       required_error: 'Obrigatório e maior que 0'
     })
     .min(1, { message: 'Obrigatório e maior que 0' }),

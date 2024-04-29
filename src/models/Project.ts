@@ -1,7 +1,7 @@
 import IAppwrite from './Appwrite'
 
 export default interface IProject extends IAppwrite {
-  number: number
+  number: string
   category: string
   details?: string
   additional?: string

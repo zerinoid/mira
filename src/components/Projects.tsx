@@ -23,7 +23,7 @@ const Projects: FC<Props> = ({
   const [projects, setProjects] = useState<IProject[]>()
   const [projectsError, setProjectsError] = useState<string>('')
   const [isLoadingProjects, setIsLoadingProjects] = useState<boolean>(true)
-  const [nextProjectNumber, setNextProjectNumber] = useState<number>(0)
+  const [nextProjectNumber, setNextProjectNumber] = useState<string>('0')
 
   useEffect(() => {
     void getProjects()
@@ -39,14 +39,17 @@ const Projects: FC<Props> = ({
     }
   }
 
-  const handleNextProjectNumber = (projects: IProject[]): number => {
-    const projectNumbers = projects.map(project => project.number)
+  const handleNextProjectNumber = (projects: IProject[]): string => {
+    const projectNumbers = projects.map(project => Number(project.number))
+    console.log({ projectNumbers })
+
     let nextNumber = projects.length + 1
+    console.log({ nextNumber })
 
     while (projectNumbers.includes(nextNumber)) {
       nextNumber++
     }
-    return nextNumber
+    return String(nextNumber)
   }
 
   const getProjects = async () => {
