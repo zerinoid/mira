@@ -14,13 +14,16 @@ import { Textarea } from './ui/textarea'
 import { Button } from './ui/button'
 import { databases, storage } from '@/lib/appwrite_client'
 import { AppwriteException, ID } from 'appwrite'
-import { projectSchema } from '@/lib/validation/project'
+import {
+  projectOptionalImageSchema,
+  projectSchema
+} from '@/lib/validation/project'
 import { z } from 'zod'
 import RichText from './RitchText'
 import DOMPurify from 'dompurify'
 import IProject from '@/models/Project'
 import { CircleX, RotateCw } from 'lucide-react'
-import deleteImage from '@/lib/deleteImage'
+/* import deleteImage from '@/lib/deleteImage' */
 
 type Props = {
   userId?: string
@@ -44,8 +47,10 @@ const NewProject: FC<Props> = ({
   const [filePreview, setFilePreview] = useState<string | ArrayBuffer | null>()
   const [submitError, setSubmitError] = useState<string>('')
 
-  const form = useForm<z.infer<typeof projectSchema>>({
-    resolver: zodResolver(projectSchema),
+  const currentSchema = project ? projectOptionalImageSchema : projectSchema
+
+  const form = useForm<z.infer<typeof currentSchema>>({
+    resolver: zodResolver(currentSchema),
     defaultValues: {
       number: project?.number || nextProjectNumber,
       category: project?.category || '',
@@ -93,7 +98,9 @@ const NewProject: FC<Props> = ({
     }
   }
 
-  const onSubmit = async (values: z.infer<typeof projectSchema>) => {
+  const onSubmit = async (
+    values: z.infer<typeof projectSchema | typeof projectOptionalImageSchema>
+  ) => {
     if (project) {
       await onEditProject(values)
     } else {
@@ -141,7 +148,9 @@ const NewProject: FC<Props> = ({
     }
   }
 
-  const onEditProject = async (values: z.infer<typeof projectSchema>) => {
+  const onEditProject = async (
+    values: z.infer<typeof projectOptionalImageSchema>
+  ) => {
     try {
       setIsLoadingNewProject(true)
       setSubmitError('')
