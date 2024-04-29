@@ -23,6 +23,7 @@ import RichText from './RitchText'
 import DOMPurify from 'dompurify'
 import IProject from '@/models/Project'
 import { CircleX, RotateCw } from 'lucide-react'
+import deleteImage from '@/lib/deleteImage'
 /* import deleteImage from '@/lib/deleteImage' */
 
 type Props = {
@@ -154,24 +155,29 @@ const NewProject: FC<Props> = ({
     try {
       setIsLoadingNewProject(true)
       setSubmitError('')
-      /* const deleteImageRes = await deleteImage(project.image_id)
 
-* if (!deleteImageRes.success) {
-*   setSubmitError(deleteImageRes.message)
-*   return
-* } */
+      let imageResponse
 
-      const imageResponse = await uploadImage()
+      if (file) {
+        const deleteImageRes = await deleteImage(project!.image_id)
 
-      if (typeof imageResponse === 'undefined') {
-        setSubmitError('Upload de nova imagem falhou')
-        throw new Error('Upload de nova imagem falhou')
+        if (!deleteImageRes.success) {
+          setSubmitError(deleteImageRes.message)
+          return
+        }
+
+        imageResponse = await uploadImage()
+
+        if (typeof imageResponse === 'undefined') {
+          setSubmitError('Upload de nova imagem falhou')
+          throw new Error('Upload de nova imagem falhou')
+        }
       }
 
       delete values.file
       const projectUpdated = {
         ...values,
-        image_id: imageResponse.$id,
+        image_id: imageResponse && imageResponse.$id,
         body: DOMPurify.sanitize(values.body),
         title: DOMPurify.sanitize(values.title)
       }

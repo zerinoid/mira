@@ -57,6 +57,7 @@ export const imageSchemaOptional = z
           message: `Formatos aceitos: ${formatedTypes.join(', ')}`
         })
       }
+
       // check file size
       if (file?.size > 3 * MB_BYTES) {
         ctx.addIssue({
@@ -69,5 +70,7 @@ export const imageSchemaOptional = z
           inclusive: true
         })
       }
+    } else {
+      return
     }
   })
