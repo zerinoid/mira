@@ -53,7 +53,7 @@ const NewProject: FC<Props> = ({
   const form = useForm<z.infer<typeof currentSchema>>({
     resolver: zodResolver(currentSchema),
     defaultValues: {
-      number: project?.number || nextProjectNumber,
+      number: project?.number ? String(project?.number) : nextProjectNumber,
       category: project?.category || '',
       title: project?.title || '',
       details: project?.details || '',
