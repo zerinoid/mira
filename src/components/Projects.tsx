@@ -41,10 +41,8 @@ const Projects: FC<Props> = ({
 
   const handleNextProjectNumber = (projects: IProject[]): string => {
     const projectNumbers = projects.map(project => Number(project.number))
-    console.log({ projectNumbers })
 
-    let nextNumber = projects.length + 1
-    console.log({ nextNumber })
+    let nextNumber = 1
 
     while (projectNumbers.includes(nextNumber)) {
       nextNumber++
