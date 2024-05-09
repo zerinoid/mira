@@ -6,6 +6,7 @@ import IProject from '../models/Project'
 import NewProject from '@/components/NewProject'
 import Spinner from '@/components/animation/Spinner'
 import UserType from '@/models/User'
+import handleNextProjectNumber from '@/lib/nextProjectNumber'
 
 type Props = {
   setUser: Dispatch<SetStateAction<UserType>>
@@ -39,17 +40,6 @@ const Projects: FC<Props> = ({
     }
   }
 
-  const handleNextProjectNumber = (projects: IProject[]): string => {
-    const projectNumbers = projects.map(project => Number(project.number))
-
-    let nextNumber = 1
-
-    while (projectNumbers.includes(nextNumber)) {
-      nextNumber++
-    }
-    return String(nextNumber)
-  }
-
   const getProjects = async () => {
     try {
       const response = await databases.listDocuments(
@@ -67,11 +57,12 @@ const Projects: FC<Props> = ({
         (a, b) => b.number - a.number
       )
 
+      const projectNumbers = response.documents.map(project =>
+        Number(project.number)
+      )
       setProjects(sortedProjects as IProject[])
       setIsLoadingProjects(false)
-      setNextProjectNumber(
-        handleNextProjectNumber(response.documents as IProject[])
-      )
+      setNextProjectNumber(handleNextProjectNumber(projectNumbers))
     } catch (error) {
       setProjects([])
       const projectsError = 'Erro ao requisitar projetos'
