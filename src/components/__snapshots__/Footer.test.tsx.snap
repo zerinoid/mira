@@ -1,0 +1,45 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Test Footer comp > Should login 1`] = `
+<div>
+  <footer
+    class="font-sans"
+  >
+    <div
+      class="text-sm text-bold container flex items-center justify-center h-12 px-[5px] md:justify-end"
+    >
+      <div>
+        <a
+          href="https://zerino.org"
+          rel="noreferrer"
+          target="_blank"
+        >
+          zerino desenvolvimento
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
+
+exports[`Test Footer comp > Should render footer comp 1`] = `
+<div>
+  <footer
+    class="font-sans"
+  >
+    <div
+      class="text-sm text-bold container flex items-center justify-center h-12 px-[5px] md:justify-end"
+    >
+      <div>
+        <a
+          href="https://zerino.org"
+          rel="noreferrer"
+          target="_blank"
+        >
+          zerino desenvolvimento
+        </a>
+      </div>
+    </div>
+  </footer>
+</div>
+`;
