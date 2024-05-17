@@ -15,8 +15,9 @@ export default defineConfig({
     host: true
   },
   test: {
+    globals: true,
+    environment: 'jsdom',
     coverage: {
-      include: ['**/lib'],
       exclude: ['**/validation']
     }
   }

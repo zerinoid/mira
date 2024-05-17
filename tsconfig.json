@@ -24,7 +24,12 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+
+    /* vitest */
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": ["src"],
   "references": [{
