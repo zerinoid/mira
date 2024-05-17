@@ -1,7 +1,7 @@
 import handleNextProjectNumber from '@/lib/nextProjectNumber'
 import { describe, expect, it } from 'vitest'
 
-describe('nextProjectNumber', () => {
+describe('test nextProjectNumber', () => {
   it('should return 1', () => {
     expect(handleNextProjectNumber([3, 4, 5, 6, 7, 8, 9, 10])).toBe('1')
   })
@@ -12,5 +12,9 @@ describe('nextProjectNumber', () => {
 
   it('should return 8', () => {
     expect(handleNextProjectNumber([1, 2, 3, 4, 5, 6, 7])).toBe('8')
+  })
+
+  it('should return 1 for empty array', () => {
+    expect(handleNextProjectNumber([])).toBe('1')
   })
 })
